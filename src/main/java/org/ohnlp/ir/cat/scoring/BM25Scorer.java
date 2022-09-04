@@ -90,7 +90,21 @@ public class BM25Scorer extends Scorer {
                 "Query: Filter table to Criteria matching items",
                 ParDo.of(
                         new DoFn<KV<String, DomainResource>, KV<String, KV<String, DomainResource>>>() {
-                            // TODO: match against query param using FHIR-based values
+                            @ProcessElement
+                            public void process(@Element KV<String, DomainResource> in,
+                                                OutputReceiver<KV<String, KV<String, DomainResource>>> out) {
+                                String patientUID = in.getKey();
+                                DomainResource res = in.getValue();
+                                query.forEach((criterion_uid, resolved_match_criteria) -> {
+                                    for (CriterionValue criterion : resolved_match_criteria) {
+                                        if (criterion.matches(res)) {
+                                            out.output(KV.of(criterion_uid, KV.of(patientUID, res)));
+                                            break; // Do not allow multiple matched synonyms to output duplicate
+                                        }
+                                    }
+                                });
+                            }
+
                         }
                 )
         );
