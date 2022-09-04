@@ -25,7 +25,9 @@ public class BM25Scorer extends Scorer {
     private double k1 = 1.2;
     private double b = 0.75;
 
-    // Patient ID Extraction Functions TODO consider using reflection instead since field names/types is same even if not abstractified
+    // Patient ID Extraction Functions
+    private static final SerializableFunction<DomainResource, String>
+            PERSON_PATUID_EXTRACTION = Resource::getId;
     private static final SerializableFunction<DomainResource, String>
             CONDITION_PATUID_EXTRACTION = (r) -> ((Condition) r).getSubject().getIdentifier().getValue();
     private static final SerializableFunction<DomainResource, String>
@@ -45,6 +47,10 @@ public class BM25Scorer extends Scorer {
         PCollection<? extends DomainResource> items;
         SerializableFunction<DomainResource, String> patUIDExtractorFn;
         switch (this.queryType) {
+            case PERSON:
+                items = this.dataSource.getPersons(p);
+                patUIDExtractorFn = PERSON_PATUID_EXTRACTION;
+                break;
             case CONDITION:
                 items = this.dataSource.getConditions(p);
                 patUIDExtractorFn = CONDITION_PATUID_EXTRACTION;

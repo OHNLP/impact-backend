@@ -1,23 +1,55 @@
 package org.ohnlp.ir.cat.criteria;
 
 
+import ca.uhn.fhir.context.FhirContext;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hl7.fhir.r4.model.DomainResource;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
 
 public class CriterionValue implements Serializable {
     private String fieldName;
     private String value1;
     private String value2;
     private Relation reln;
+    private FhirContext internalContext = FhirContext.forR4Cached();
     private transient ThreadLocal<SimpleDateFormat> sdf;
+    private transient ThreadLocal<ObjectMapper> om;
+
 
     public CriterionValue() {
         this.sdf = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
+        this.om = ThreadLocal.withInitial(ObjectMapper::new);
     }
 
-    public boolean matches(String value) {
+    public boolean matches(DomainResource resource) {
+        String resourceJSON = internalContext.newJsonParser().encodeResourceToString(resource);
+        String value;
+        try {
+            JsonNode json = om.get().readTree(resourceJSON);
+            LinkedList<String> pathStack = new LinkedList<>(Arrays.asList(fieldName.split("\\.")));
+            while (pathStack.size() > 1) {
+                if (!json.has(pathStack.getFirst())) {
+                    return false; // If path doesn't exist in resource return false.
+                    // TODO should consider including value type to ensure proper matching/error otherwise instead of JSON-based impl
+                }
+                json = json.get(pathStack.getFirst());
+                pathStack.removeFirst();
+            }
+            value = json.get(pathStack.getFirst()).asText();
+        } catch (JsonProcessingException e) {
+            return false;
+        }
+        // Navigate to
         // First try to see if value is numeric
         boolean inputTypeValid = false;
         try {
