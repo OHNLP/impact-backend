@@ -12,6 +12,7 @@ import java.util.Set;
 public interface EHRDataSource {
     void loadConfig(JsonNode node);
     Set<CriterionValue> convertToLocalTerminology(ClinicalDataType type, CriterionValue input);
+    PCollection<Person> getPersons(Pipeline pipeline);
     PCollection<Condition> getConditions(Pipeline pipeline);
     PCollection<MedicationStatement> getMedications(Pipeline pipeline);
     PCollection<Procedure> getProcedures(Pipeline pipeline);

@@ -13,15 +13,74 @@ import org.ohnlp.ir.cat.connections.BigQueryDataConnectionImpl;
 import org.ohnlp.ir.cat.criteria.CriterionValue;
 import org.ohnlp.ir.cat.structs.ClinicalDataType;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class OHDSICDMDataSource implements EHRDataSource {
 
     private DataConnection ehrDataConnection;
     private String cdmSchemaName;
+
+    @Override
+    public PCollection<Person> getPersons(Pipeline pipeline) {
+        return ehrDataConnection.getForQueryAndSchema(
+                pipeline,
+                "SELECT person_id, " +
+                        "gender_concept_id, " +
+                        "year_of_birth, " +
+                        "month_of_birth," +
+                        "day_of_birth," +
+                        "race_concept_id," +
+                        "ethnicity_concept_id" +
+                        " FROM " + cdmSchemaName + ".person ",
+                Schema.builder()
+                        .addFields(
+                                Schema.Field.of("person_id", Schema.FieldType.INT64),
+                                Schema.Field.of("gender_concept_id", Schema.FieldType.INT32),
+                                Schema.Field.of("year_of_birth", Schema.FieldType.INT32),
+                                Schema.Field.of("month_of_birth", Schema.FieldType.INT32),
+                                Schema.Field.of("day_of_birth", Schema.FieldType.INT32),
+                                Schema.Field.of("race_concept_id", Schema.FieldType.INT32),
+                                Schema.Field.of("ethnicity_concept_id", Schema.FieldType.INT32)
+                        ).build()
+        ).apply("Convert Person Read to FHIR", ParDo.of(
+                new DoFn<Row, Person>() {
+                    @ProcessElement
+                    public void process(@Element Row in, OutputReceiver<Person> out) {
+                        String personID = in.getInt64("person_id") + "";
+                        int genderConceptId = in.getInt32("gender_concept_id");
+                        int birthyr = in.getInt32("year_of_birth");
+                        int birthmnth = in.getInt32("month_of_birth");
+                        int birthday = in.getInt32("day_of_birth");
+                        int raceConceptId = in.getInt32("race_concept_id");
+                        int ethnicityConceptId = in.getInt32("ethnicity_concept_id");
+                        Person p = new Person();
+                        p.setId(personID);
+                        switch (genderConceptId) {
+                            case 0:
+                                p.setGender(Enumerations.AdministrativeGender.NULL);
+                                break;
+                            case 8507:
+                                p.setGender(Enumerations.AdministrativeGender.MALE);
+                                break;
+                            case 8532:
+                                p.setGender(Enumerations.AdministrativeGender.FEMALE);
+                                break;
+                            default:
+                                p.setGender(Enumerations.AdministrativeGender.UNKNOWN);
+                                break;
+                        }
+                        p.setGender(genderConceptId == 0 ? // Only accepted values are 8507/8532, leave 0 as null fallback
+                                Enumerations.AdministrativeGender.NULL :
+                                (genderConceptId == 8507 ?
+                                        Enumerations.AdministrativeGender.MALE :
+                                        Enumerations.AdministrativeGender.FEMALE));
+                        p.setBirthDate(new GregorianCalendar(birthyr, birthmnth - 1, birthday).getTime());
+                        // TODO seems race and ethnicity not mapped to FHIR person? investigate where else this is.
+                        out.output(p);
+                    }
+                }
+        ));
+    }
 
     @Override
     public PCollection<Condition> getConditions(Pipeline pipeline) {
@@ -103,7 +162,8 @@ public class OHDSICDMDataSource implements EHRDataSource {
                         out.output(ms);
                     }
                 }
-        ));    }
+        ));
+    }
 
     @Override
     public PCollection<Procedure> getProcedures(Pipeline pipeline) {
