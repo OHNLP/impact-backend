@@ -26,4 +26,9 @@ public class BigQueryDataConnectionImpl implements DataConnection {
         }));
     }
 
+    @Override
+    public void write(String table, PCollection<Row> data) {
+        throw new UnsupportedOperationException("Not implemented yet"); // TODO
+    }
+
 }

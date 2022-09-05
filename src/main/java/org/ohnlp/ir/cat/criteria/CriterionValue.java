@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hl7.fhir.r4.model.DomainResource;
+import org.ohnlp.ir.cat.structs.PatientScore;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class CriterionValue extends Criterion implements Serializable {
     private String fieldName;
@@ -62,6 +64,11 @@ public class CriterionValue extends Criterion implements Serializable {
         }
         // Finally, do a direct string compare
         return value.equalsIgnoreCase(value1); // TODO there might be some value in allowing for case sensitive matches
+    }
+
+    @Override
+    public double score(Map<String, PatientScore> scoreByCriterionUID) {
+        return scoreByCriterionUID.get(criterionUID).getScore();
     }
 
     private boolean compareNumeric(double input) throws NumberFormatException {

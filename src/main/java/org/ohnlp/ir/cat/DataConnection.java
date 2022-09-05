@@ -7,4 +7,5 @@ import org.apache.beam.sdk.values.Row;
 
 public interface DataConnection {
     PCollection<Row> getForQueryAndSchema(Pipeline pipeline, String query, Schema schema);
+    void write(String table, PCollection<Row> data);
 }
