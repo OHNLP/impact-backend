@@ -5,6 +5,9 @@ import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.schemas.transforms.Join;
 import org.apache.beam.sdk.transforms.*;
 import org.apache.beam.sdk.transforms.Count;
+import org.apache.beam.sdk.transforms.join.CoGbkResult;
+import org.apache.beam.sdk.transforms.join.CoGroupByKey;
+import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
 import org.apache.beam.sdk.values.*;
 import org.hl7.fhir.r4.model.*;
 import org.ohnlp.ir.cat.criteria.CriterionValue;
@@ -12,8 +15,11 @@ import org.ohnlp.ir.cat.ehr.datasource.EHRDataSource;
 import org.ohnlp.ir.cat.structs.ClinicalDataType;
 import org.ohnlp.ir.cat.structs.PatientScore;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Scores an input set of query terms with BM25 scoring.
@@ -37,16 +43,18 @@ public class BM25Scorer extends Scorer {
     private static final SerializableFunction<DomainResource, String>
             OBSERVATION_PATUID_EXTRACTION = (r) -> ((Observation) r).getSubject().getIdentifier().getValue();
 
-    public BM25Scorer(EHRDataSource dataSource,
-                      ClinicalDataType queryType) {
-        super(dataSource, queryType);
+    public BM25Scorer(EHRDataSource dataSource) {
+        super(dataSource);
     }
 
 
-    public PCollection<KV<String, PatientScore>> score(Pipeline p, Map<String, Set<CriterionValue>> query) {
+    public PCollection<KV<KV<String, String>, PatientScore>> score(
+            Pipeline p,
+            Map<String, Set<CriterionValue>> query,
+            ClinicalDataType queryType) {
         PCollection<? extends DomainResource> items;
         SerializableFunction<DomainResource, String> patUIDExtractorFn;
-        switch (this.queryType) {
+        switch (queryType) {
             case PERSON:
                 items = this.dataSource.getPersons(p);
                 patUIDExtractorFn = PERSON_PATUID_EXTRACTION;
@@ -78,7 +86,7 @@ public class BM25Scorer extends Scorer {
                         new DoFn<DomainResource, KV<String, DomainResource>>() {
                             @ProcessElement
                             public void process(@Element DomainResource record,
-                                                       OutputReceiver<KV<String, DomainResource>> out) {
+                                                OutputReceiver<KV<String, DomainResource>> out) {
                                 out.output(KV.of(patUIDExtractorFn.apply(record), record));
                             }
                         }
@@ -108,6 +116,56 @@ public class BM25Scorer extends Scorer {
                         }
                 )
         );
+
+        // Collection of evidence IDs for lookup to pass on to the frontend/user for scoring purposes
+
+        PCollection<KV<KV<String, String>, Set<String>>> evidence = queryMatches.apply("Query: generate evidence ID list",
+                new PTransform<PCollection<KV<String, KV<String, DomainResource>>>, PCollection<KV<KV<String, String>, Set<String>>>>() {
+                    @Override
+                    public PCollection<KV<KV<String, String>, Set<String>>> expand(PCollection<KV<String, KV<String, DomainResource>>> input) {
+                        return input.apply(
+                                "Format matched evidence for grouping and extract IDs",
+                                // Transform to ((patient_uid, criterion_uid), evidence_id) as otherwise
+                                // each thread would require loading all patients matching criterion
+                                // when we do groupByKey.
+                                ParDo.of(new DoFn<KV<String, KV<String, DomainResource>>, KV<KV<String, String>, String>>() {
+                                    @ProcessElement
+                                    public void process(@Element KV<String, KV<String, DomainResource>> in,
+                                                        OutputReceiver<KV<KV<String, String>, String>> out) {
+                                        out.output(
+                                                KV.of(
+                                                        KV.of(in.getValue().getKey(), in.getKey()),
+                                                        in.getValue().getValue().getId())
+                                        );
+                                    }
+                                })
+                        ).apply(
+                                "Group IDs by criteria and patient",
+                                GroupByKey.create()
+                        ).apply(
+                                "Create evidence ID sets",  // ((criterion_uid, patient_uid), evidence_ids)
+                                ParDo.of(
+                                        new DoFn<KV<KV<String, String>, Iterable<String>>, KV<KV<String, String>, Set<String>>>() {
+                                            @ProcessElement
+                                            public void process(@Element KV<KV<String, String>, Iterable<String>> in,
+                                                                OutputReceiver<KV<KV<String, String>, Set<String>>> out) {
+                                                out.output(
+                                                        KV.of(
+                                                                KV.of(
+                                                                        in.getKey().getValue(),
+                                                                        in.getKey().getKey()
+                                                                ),
+                                                                StreamSupport.stream(in.getValue().spliterator(), false)
+                                                                        .collect(Collectors.toSet())
+                                                        )
+                                                );
+                                            }
+
+                                        }
+                                )
+                        );
+                    }
+                });
 
         // Calculate BM25 Parameter (Collection Size/Number of Patients)
         PCollectionView<Long> collSizeView = getNumPatientsInEHR(allRecordsByPatientUID).apply(View.asSingleton());
@@ -142,7 +200,38 @@ public class BM25Scorer extends Scorer {
         // Doc lens can be accessed at "rhs"
         // idf can be accessed at lhs -> rhs
         // tf can be accessed at lhs -> lhs
-        return getScores(doclen, idf, tf, avgDocLen);
+        // result is in format ((criterion_uid, patient_uid), score_obj)
+        PCollection<KV<KV<String, String>, PatientScore>> scores = getScores(doclen, idf, tf, avgDocLen);
+
+        // Now join with evidence IDs and return
+        TupleTag<Set<String>> evidenceTag = new TupleTag<>();
+        TupleTag<PatientScore> scoreTag = new TupleTag<>();
+        return KeyedPCollectionTuple.of(evidenceTag, evidence)
+                        .and(scoreTag, scores)
+                        .apply(CoGroupByKey.create())
+                        .apply(
+                                "Merge evidence IDs into scores",
+                                ParDo.of(
+                                        new DoFn<KV<KV<String, String>, CoGbkResult>, KV<KV<String, String>, PatientScore>>() {
+                                            @ProcessElement
+                                            public void process(
+                                                    @Element KV<KV<String, String>, CoGbkResult> e,
+                                                    OutputReceiver<KV<KV<String, String>, PatientScore>> out
+                                            ) {
+                                                KV<String, String> key = e.getKey();
+                                                Set<String> evidenceSet = e.getValue().getOnly(evidenceTag);
+                                                PatientScore scoreObj = e.getValue().getOnly(scoreTag);
+                                                scoreObj.setEvidenceIDs(evidenceSet);
+                                                out.output(
+                                                        KV.of(
+                                                                key,
+                                                                scoreObj
+                                                        )
+                                                );
+                                            }
+                                        }
+                                )
+                        );
     }
 
     private PCollection<Row> getIdf(Schema idfSchema, PCollection<KV<String, KV<String, DomainResource>>> queryMatches, PCollectionView<Long> collSizeView) {
@@ -151,7 +240,7 @@ public class BM25Scorer extends Scorer {
                         new DoFn<KV<String, KV<String, DomainResource>>, KV<String, String>>() {
                             @ProcessElement
                             public void process(@Element KV<String, KV<String, DomainResource>> record,
-                                                       OutputReceiver<KV<String, String>> out) {
+                                                OutputReceiver<KV<String, String>> out) {
                                 out.output(KV.of(record.getKey(), record.getValue().getKey()));
                             }
                         }
@@ -277,7 +366,7 @@ public class BM25Scorer extends Scorer {
         }));
     }
 
-    private PCollection<KV<String, PatientScore>> getScores(PCollection<KV<String, Long>> doclen, PCollection<Row> idf, PCollection<Row> tf, PCollectionView<Double> avgDocLen) {
+    private PCollection<KV<KV<String, String>, PatientScore>> getScores(PCollection<KV<String, Long>> doclen, PCollection<Row> idf, PCollection<Row> tf, PCollectionView<Double> avgDocLen) {
         return tf.apply(
                 "BM25 Step 5.1: Join TF, IDF, and docLen for calculation",
                 // Use broadcast joins for efficiency since lhs is always smaller than rhs
@@ -304,12 +393,12 @@ public class BM25Scorer extends Scorer {
         ).apply(
                 "BM25 Step 5.2: Calculate BM25 scores from joined values",
                 ParDo.of(
-                        new DoFn<Row, KV<String, PatientScore>>() {
+                        new DoFn<Row, KV<KV<String, String>, PatientScore>>() {
                             // Technically row gets can produce NPEs but would never happen due to inner join by definition
                             @SuppressWarnings("ConstantConditions")
                             // TODO find better way to handle/rename nested joined items to something less confusing
                             @ProcessElement
-                            public void process(ProcessContext c, @Element Row in, OutputReceiver<KV<String, PatientScore>> out) {
+                            public void process(ProcessContext c, @Element Row in, OutputReceiver<KV<KV<String, String>, PatientScore>> out) {
                                 double bm25 = bm25(
                                         in.getRow("lhs").getRow("rhs").getInt64("idf").doubleValue(),
                                         in.getRow("lhs").getRow("lhs").getInt64("tf").doubleValue(),
@@ -318,10 +407,13 @@ public class BM25Scorer extends Scorer {
                                 );
                                 out.output(
                                         KV.of(
-                                                in.getRow("lhs").getRow("lhs").getString("criterion_uid"),
+                                                KV.of(
+                                                        in.getRow("lhs").getRow("lhs").getString("criterion_uid"),
+                                                        in.getRow("lhs").getRow("lhs").getString("patient_uid")),
                                                 new PatientScore(
                                                         in.getRow("lhs").getRow("lhs").getString("patient_uid"),
-                                                        bm25
+                                                        bm25,
+                                                        new HashSet<>() //  Empty evidence/to be added in next step
                                                 )
                                         )
                                 );
