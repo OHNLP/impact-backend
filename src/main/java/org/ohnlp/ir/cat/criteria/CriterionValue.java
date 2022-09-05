@@ -3,7 +3,6 @@ package org.ohnlp.ir.cat.criteria;
 
 import ca.uhn.fhir.context.FhirContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hl7.fhir.r4.model.DomainResource;
@@ -11,12 +10,11 @@ import org.hl7.fhir.r4.model.DomainResource;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class CriterionValue implements Serializable {
+public class CriterionValue extends Criterion implements Serializable {
     private String fieldName;
     private String value1;
     private String value2;
@@ -31,6 +29,7 @@ public class CriterionValue implements Serializable {
         this.om = ThreadLocal.withInitial(ObjectMapper::new);
     }
 
+    @Override
     public boolean matches(DomainResource resource) {
         String resourceJSON = internalContext.newJsonParser().encodeResourceToString(resource);
         String value;
