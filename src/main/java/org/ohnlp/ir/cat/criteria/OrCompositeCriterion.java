@@ -4,7 +4,11 @@ import org.hl7.fhir.r4.model.DomainResource;
 import org.ohnlp.ir.cat.structs.PatientScore;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class OrCompositeCriterion extends CompositeCriterion {
 
@@ -29,9 +33,19 @@ public class OrCompositeCriterion extends CompositeCriterion {
         return false;
     }
 
-    // For OR, return max of subscores // TODO handle minimum number of matches not being met
+    // For OR, return max of subscores. For minMatch > 1, use average of top minMatch subscores (thus penalizing if
+    // minimum number not met)
     @Override
     public double score(Map<String, PatientScore> scoreByCriterionUID) {
-        return Arrays.stream(subcriterion).map(c -> c.score(scoreByCriterionUID)).reduce(Double::max).orElse(0.00);
+        LinkedList<Double> scoresSorted = Arrays.stream(subcriterion).map(c -> c.score(scoreByCriterionUID))
+                .sorted()
+                .collect(Collectors.toCollection(LinkedList::new));
+        double scoreTotal = 0;
+        int scoresContributedCount = 0;
+        while (scoresContributedCount < minMatch) {
+            scoreTotal += scoresSorted.size() > 0 ? scoresSorted.removeLast() : 0;
+            scoresContributedCount++;
+        }
+        return scoreTotal / minMatch;
     }
 }
