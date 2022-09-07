@@ -11,6 +11,7 @@ import org.apache.beam.sdk.values.Row;
 import org.ohnlp.ir.cat.connections.BigQueryDataConnectionImpl;
 import org.ohnlp.ir.cat.criteria.Criterion;
 import org.ohnlp.ir.cat.criteria.CriterionValue;
+import org.ohnlp.ir.cat.ehr.datasource.EHRDataSource;
 import org.ohnlp.ir.cat.ehr.datasource.OHDSICDMDataSource;
 import org.ohnlp.ir.cat.scoring.BM25Scorer;
 import org.ohnlp.ir.cat.scoring.Scorer;
@@ -26,14 +27,15 @@ public class CohortIdentificationJob {
     public static void main(String... args) {
         String jobUID = ""; // TODO
         DataConnection out = new BigQueryDataConnectionImpl(); // TODO config
+        EHRDataSource dataSource = new OHDSICDMDataSource();
         // TODO render init configurable/parseable
         ClinicalDataType cdt = ClinicalDataType.CONDITION; // TODO
         Criterion baseCriterion = new CriterionValue();
         Map<String, Set<CriterionValue>> queryDefinitionForCDT = new HashMap<>(); // TODO load from criterion tree and split into different data types/synonyms
         Pipeline p = Pipeline.create();
-        Scorer scorer = new BM25Scorer(new OHDSICDMDataSource());
+        Scorer scorer = new BM25Scorer();
         // Score based on leaf nodes
-        PCollection<KV<KV<String, String>, PatientScore>> leafScores = scorer.score(p, queryDefinitionForCDT, cdt);
+        PCollection<KV<KV<String, String>, PatientScore>> leafScores = scorer.score(p, queryDefinitionForCDT, cdt, dataSource);
         // Now combine scores using the base criterion
         PCollection<KV<String, Double>> scoresByPatientUid = leafScores.apply("Score Aggregation: Remap to (patient_uid, (criterion_uid, scoreWithEvidence))",
                 ParDo.of(new DoFn<KV<KV<String, String>, PatientScore>, KV<String, KV<String, PatientScore>>>() {

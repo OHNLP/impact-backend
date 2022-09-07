@@ -43,41 +43,16 @@ public class BM25Scorer extends Scorer {
     private static final SerializableFunction<DomainResource, String>
             OBSERVATION_PATUID_EXTRACTION = (r) -> ((Observation) r).getSubject().getIdentifier().getValue();
 
-    public BM25Scorer(EHRDataSource dataSource) {
-        super(dataSource);
-    }
-
 
     public PCollection<KV<KV<String, String>, PatientScore>> score(
             Pipeline p,
             Map<String, Set<CriterionValue>> query,
-            ClinicalDataType queryType) {
-        PCollection<? extends DomainResource> items;
-        SerializableFunction<DomainResource, String> patUIDExtractorFn;
-        switch (queryType) {
-            case PERSON:
-                items = this.dataSource.getPersons(p);
-                patUIDExtractorFn = PERSON_PATUID_EXTRACTION;
-                break;
-            case CONDITION:
-                items = this.dataSource.getConditions(p);
-                patUIDExtractorFn = CONDITION_PATUID_EXTRACTION;
-                break;
-            case PROCEDURE:
-                items = this.dataSource.getProcedures(p);
-                patUIDExtractorFn = PROCEDURE_PATUID_EXTRACTION;
-                break;
-            case MEDICATION:
-                items = this.dataSource.getMedications(p);
-                patUIDExtractorFn = MEDICATION_PATUID_EXTRACTION;
-                break;
-            case OBSERVATION:
-                items = this.dataSource.getObservations(p);
-                patUIDExtractorFn = OBSERVATION_PATUID_EXTRACTION;
-                break;
-            default:
-                throw new UnsupportedOperationException("Unknown query type " + queryType);
-        }
+            ClinicalDataType queryType,
+            EHRDataSource dataSource) {
+
+        PCollection<? extends DomainResource> items = getRawData(p, dataSource, queryType);
+
+        SerializableFunction<DomainResource, String> patUIDExtractorFn = getPatIDExtractorFn(queryType);
 
         // Extract patient UIDs from DomainResource objects
         PCollection<KV<String, DomainResource>> allRecordsByPatientUID = items.apply(
@@ -94,7 +69,87 @@ public class BM25Scorer extends Scorer {
         );
 
         // Apply cohort definition criteria matching, produces <criteriaUID, <patientUID, matchingResource>>
-        PCollection<KV<String, KV<String, DomainResource>>> queryMatches = allRecordsByPatientUID.apply(
+        PCollection<KV<String, KV<String, DomainResource>>> queryMatches = filterMatching(allRecordsByPatientUID, query);
+
+        // Collection of evidence IDs for lookup to pass on to the frontend/user for scoring purposes
+        PCollection<KV<KV<String, String>, Set<String>>> evidence = generateEvidenceSets(queryMatches);
+
+        // Calculate BM25 Parameter (Collection Size/Number of Patients)
+        PCollectionView<Long> collSizeView = getNumPatientsInEHR(allRecordsByPatientUID).apply(View.asSingleton());
+
+        // Calculate document lengths (number of records per patient)
+        PCollection<KV<String, Long>> doclen = allRecordsByPatientUID.apply(
+                "BM25 Step 2.1: Count records by Patient ID",
+                Count.perKey()
+        );
+        // Calculate BM25 Parameter (Average Document Length/Average Number of Records per Patient of given Data Type)
+        PCollectionView<Double> avgDocLen = getAverageNumRecordsPerPatient(doclen).apply(View.asSingleton());
+
+        // Calculate Inverse Document Frequency
+        Schema idfSchema = Schema.of(
+                Schema.Field.of("criterion_uid", Schema.FieldType.STRING),
+                Schema.Field.of("idf", Schema.FieldType.INT64)
+        );
+
+        PCollection<Row> idf = getIdf(idfSchema, queryMatches, collSizeView);
+
+        // Calculate term frequency per criterion
+        Schema tfSchema = Schema.of(
+                Schema.Field.of("criterion_uid", Schema.FieldType.STRING),
+                Schema.Field.of("patient_uid", Schema.FieldType.STRING),
+                Schema.Field.of("tf", Schema.FieldType.INT64)
+        );
+
+        PCollection<Row> tf = getTF(tfSchema, queryMatches);
+
+        // Calculate bm25 joining tf, idf, and docLen PCollections
+        // Because of beam limitations, join structure is as follows.
+        // Doc lens can be accessed at "rhs"
+        // idf can be accessed at lhs -> rhs
+        // tf can be accessed at lhs -> lhs
+        // result is in format ((criterion_uid, patient_uid), score_obj)
+        PCollection<KV<KV<String, String>, PatientScore>> scores = getScores(doclen, idf, tf, avgDocLen);
+
+        // Now join with evidence IDs and return
+        return joinScoresWithEvidence(scores, evidence);
+    }
+
+    private PCollection<? extends DomainResource> getRawData(Pipeline p, EHRDataSource dataSource, ClinicalDataType queryType) {
+        switch (queryType) {
+            case PERSON:
+                return dataSource.getPersons(p);
+            case CONDITION:
+                return dataSource.getConditions(p);
+            case PROCEDURE:
+                return dataSource.getProcedures(p);
+            case MEDICATION:
+                return dataSource.getMedications(p);
+            case OBSERVATION:
+                return dataSource.getObservations(p);
+            default:
+                throw new UnsupportedOperationException("Unknown query type " + queryType);
+        }
+    }
+
+    private SerializableFunction<DomainResource, String> getPatIDExtractorFn(ClinicalDataType queryType) {
+        switch (queryType) {
+            case PERSON:
+                return PERSON_PATUID_EXTRACTION;
+            case CONDITION:
+                return CONDITION_PATUID_EXTRACTION;
+            case PROCEDURE:
+                return PROCEDURE_PATUID_EXTRACTION;
+            case MEDICATION:
+                return MEDICATION_PATUID_EXTRACTION;
+            case OBSERVATION:
+                return OBSERVATION_PATUID_EXTRACTION;
+            default:
+                throw new UnsupportedOperationException("Unknown query type " + queryType);
+        }
+    }
+
+    private PCollection<KV<String, KV<String, DomainResource>>> filterMatching(PCollection<KV<String, DomainResource>> allRecordsByPatientUID, Map<String, Set<CriterionValue>> query) {
+        return allRecordsByPatientUID.apply(
                 "Query: Filter table to Criteria matching items",
                 ParDo.of(
                         new DoFn<KV<String, DomainResource>, KV<String, KV<String, DomainResource>>>() {
@@ -116,10 +171,10 @@ public class BM25Scorer extends Scorer {
                         }
                 )
         );
+    }
 
-        // Collection of evidence IDs for lookup to pass on to the frontend/user for scoring purposes
-
-        PCollection<KV<KV<String, String>, Set<String>>> evidence = queryMatches.apply("Query: generate evidence ID list",
+    private PCollection<KV<KV<String, String>, Set<String>>> generateEvidenceSets(PCollection<KV<String, KV<String, DomainResource>>> queryMatches) {
+        return queryMatches.apply("Query: generate evidence ID list",
                 new PTransform<PCollection<KV<String, KV<String, DomainResource>>>, PCollection<KV<KV<String, String>, Set<String>>>>() {
                     @Override
                     public PCollection<KV<KV<String, String>, Set<String>>> expand(PCollection<KV<String, KV<String, DomainResource>>> input) {
@@ -166,107 +221,6 @@ public class BM25Scorer extends Scorer {
                         );
                     }
                 });
-
-        // Calculate BM25 Parameter (Collection Size/Number of Patients)
-        PCollectionView<Long> collSizeView = getNumPatientsInEHR(allRecordsByPatientUID).apply(View.asSingleton());
-        // Calculate document lengths (number of records per patient)
-        PCollection<KV<String, Long>> doclen = allRecordsByPatientUID.apply(
-                "BM25 Step 2.1: Count records by Patient ID",
-                Count.perKey()
-        );
-        // Calculate BM25 Parameter (Average Document Length/Average Number of Records per Patient of given Data Type)
-        PCollectionView<Double> avgDocLen = getAverageNumRecordsPerPatient(doclen).apply(View.asSingleton());
-
-
-        // Calculate Inverse Document Frequency
-        Schema idfSchema = Schema.of(
-                Schema.Field.of("criterion_uid", Schema.FieldType.STRING),
-                Schema.Field.of("idf", Schema.FieldType.INT64)
-        );
-
-        PCollection<Row> idf = getIdf(idfSchema, queryMatches, collSizeView);
-
-        // Calculate term frequency per criterion
-        Schema tfSchema = Schema.of(
-                Schema.Field.of("criterion_uid", Schema.FieldType.STRING),
-                Schema.Field.of("patient_uid", Schema.FieldType.STRING),
-                Schema.Field.of("tf", Schema.FieldType.INT64)
-        );
-
-        PCollection<Row> tf = getTF(tfSchema, queryMatches);
-
-        // Calculate bm25 joining tf, idf, and docLen PCollections
-        // Because of beam limitations, join structure is as follows.
-        // Doc lens can be accessed at "rhs"
-        // idf can be accessed at lhs -> rhs
-        // tf can be accessed at lhs -> lhs
-        // result is in format ((criterion_uid, patient_uid), score_obj)
-        PCollection<KV<KV<String, String>, PatientScore>> scores = getScores(doclen, idf, tf, avgDocLen);
-
-        // Now join with evidence IDs and return
-        TupleTag<Set<String>> evidenceTag = new TupleTag<>();
-        TupleTag<PatientScore> scoreTag = new TupleTag<>();
-        return KeyedPCollectionTuple.of(evidenceTag, evidence)
-                        .and(scoreTag, scores)
-                        .apply(CoGroupByKey.create())
-                        .apply(
-                                "Merge evidence IDs into scores",
-                                ParDo.of(
-                                        new DoFn<KV<KV<String, String>, CoGbkResult>, KV<KV<String, String>, PatientScore>>() {
-                                            @ProcessElement
-                                            public void process(
-                                                    @Element KV<KV<String, String>, CoGbkResult> e,
-                                                    OutputReceiver<KV<KV<String, String>, PatientScore>> out
-                                            ) {
-                                                KV<String, String> key = e.getKey();
-                                                Set<String> evidenceSet = e.getValue().getOnly(evidenceTag);
-                                                PatientScore scoreObj = e.getValue().getOnly(scoreTag);
-                                                scoreObj.setEvidenceIDs(evidenceSet);
-                                                out.output(
-                                                        KV.of(
-                                                                key,
-                                                                scoreObj
-                                                        )
-                                                );
-                                            }
-                                        }
-                                )
-                        );
-    }
-
-    private PCollection<Row> getIdf(Schema idfSchema, PCollection<KV<String, KV<String, DomainResource>>> queryMatches, PCollectionView<Long> collSizeView) {
-        return queryMatches.apply(
-                "BM25 Step 3.1 (IDF): Reformat into (criterionUID, patientUID) pairs", ParDo.of(
-                        new DoFn<KV<String, KV<String, DomainResource>>, KV<String, String>>() {
-                            @ProcessElement
-                            public void process(@Element KV<String, KV<String, DomainResource>> record,
-                                                OutputReceiver<KV<String, String>> out) {
-                                out.output(KV.of(record.getKey(), record.getValue().getKey()));
-                            }
-                        }
-                )
-        ).apply(
-                "BM25 Step 3.2 (IDF): Get distinct (criterionUID, patientUID) pairs",
-                Distinct.withRepresentativeValueFn((kv) -> kv.getKey() + "|" + kv.getValue())
-        ).apply(
-                "BM25 Step 3.3 (IDF):Get number of patients per criterion",
-                Count.perKey()
-        ).apply("BM25 Step 3.4 (IDF): Calculate values",
-                ParDo.of(
-                        new DoFn<KV<String, Long>, KV<String, Double>>() {
-                            @ProcessElement
-                            public void process(ProcessContext c, @Element KV<String, Long> e, OutputReceiver<KV<String, Double>> out) {
-                                long collSize = c.sideInput(collSizeView);
-                                out.output(KV.of(e.getKey(), idf(collSize, e.getValue())));
-                            }
-                        }
-                ).withSideInputs(collSizeView)
-        ).apply(ParDo.of(new DoFn<KV<String, Double>, Row>() {
-            @ProcessElement
-            public void process(@Element KV<String, Double> in, OutputReceiver<Row> out) {
-                out.output(Row.withSchema(idfSchema).addValues(in.getKey(), in.getValue()).build());
-            }
-        }));
     }
 
     private PCollection<Long> getNumPatientsInEHR(PCollection<KV<String, DomainResource>> allRecordsByPatientUID) {
@@ -320,6 +274,40 @@ public class BM25Scorer extends Scorer {
         );
     }
 
+    private PCollection<Row> getIdf(Schema idfSchema, PCollection<KV<String, KV<String, DomainResource>>> queryMatches, PCollectionView<Long> collSizeView) {
+        return queryMatches.apply(
+                "BM25 Step 3.1 (IDF): Reformat into (criterionUID, patientUID) pairs", ParDo.of(
+                        new DoFn<KV<String, KV<String, DomainResource>>, KV<String, String>>() {
+                            @ProcessElement
+                            public void process(@Element KV<String, KV<String, DomainResource>> record,
+                                                OutputReceiver<KV<String, String>> out) {
+                                out.output(KV.of(record.getKey(), record.getValue().getKey()));
+                            }
+                        }
+                )
+        ).apply(
+                "BM25 Step 3.2 (IDF): Get distinct (criterionUID, patientUID) pairs",
+                Distinct.withRepresentativeValueFn((kv) -> kv.getKey() + "|" + kv.getValue())
+        ).apply(
+                "BM25 Step 3.3 (IDF):Get number of patients per criterion",
+                Count.perKey()
+        ).apply("BM25 Step 3.4 (IDF): Calculate values",
+                ParDo.of(
+                        new DoFn<KV<String, Long>, KV<String, Double>>() {
+                            @ProcessElement
+                            public void process(ProcessContext c, @Element KV<String, Long> e, OutputReceiver<KV<String, Double>> out) {
+                                long collSize = c.sideInput(collSizeView);
+                                out.output(KV.of(e.getKey(), idf(collSize, e.getValue())));
+                            }
+                        }
+                ).withSideInputs(collSizeView)
+        ).apply(ParDo.of(new DoFn<KV<String, Double>, Row>() {
+            @ProcessElement
+            public void process(@Element KV<String, Double> in, OutputReceiver<Row> out) {
+                out.output(Row.withSchema(idfSchema).addValues(in.getKey(), in.getValue()).build());
+            }
+        }));
+    }
 
     private PCollection<Row> getTF(Schema tfSchema, PCollection<KV<String, KV<String, DomainResource>>> queryMatches) {
         return queryMatches.apply(
@@ -429,5 +417,36 @@ public class BM25Scorer extends Scorer {
 
     private double idf(long collsize, double numDocsWithTerm) {
         return Math.log(((collsize - numDocsWithTerm + 0.5) / (numDocsWithTerm + 0.5)) + 1);
+    }
+
+    private PCollection<KV<KV<String, String>, PatientScore>> joinScoresWithEvidence(PCollection<KV<KV<String, String>, PatientScore>> scores, PCollection<KV<KV<String, String>, Set<String>>> evidence) {
+        TupleTag<Set<String>> evidenceTag = new TupleTag<>();
+        TupleTag<PatientScore> scoreTag = new TupleTag<>();
+        return KeyedPCollectionTuple.of(evidenceTag, evidence)
+                .and(scoreTag, scores)
+                .apply(CoGroupByKey.create())
+                .apply(
+                        "Merge evidence IDs into scores",
+                        ParDo.of(
+                                new DoFn<KV<KV<String, String>, CoGbkResult>, KV<KV<String, String>, PatientScore>>() {
+                                    @ProcessElement
+                                    public void process(
+                                            @Element KV<KV<String, String>, CoGbkResult> e,
+                                            OutputReceiver<KV<KV<String, String>, PatientScore>> out
+                                    ) {
+                                        KV<String, String> key = e.getKey();
+                                        Set<String> evidenceSet = e.getValue().getOnly(evidenceTag);
+                                        PatientScore scoreObj = e.getValue().getOnly(scoreTag);
+                                        scoreObj.setEvidenceIDs(evidenceSet);
+                                        out.output(
+                                                KV.of(
+                                                        key,
+                                                        scoreObj
+                                                )
+                                        );
+                                    }
+                                }
+                        )
+                );
     }
 }
