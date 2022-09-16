@@ -8,5 +8,6 @@ public enum Relation implements Serializable {
     GT,
     GTE,
     EQ,
-    BETWEEN
+    BETWEEN,
+    IN
 }

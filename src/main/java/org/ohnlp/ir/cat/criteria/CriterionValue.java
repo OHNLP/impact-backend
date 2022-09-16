@@ -5,21 +5,20 @@ import ca.uhn.fhir.context.FhirContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.ohnlp.ir.cat.structs.PatientScore;
 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CriterionValue extends Criterion implements Serializable {
     private String fieldName;
-    private String value1;
-    private String value2;
+    private String[] values;
     private Relation reln;
     private FhirContext internalContext = FhirContext.forR4Cached();
     private transient ThreadLocal<SimpleDateFormat> sdf;
@@ -34,25 +33,41 @@ public class CriterionValue extends Criterion implements Serializable {
     @Override
     public boolean matches(DomainResource resource) {
         String resourceJSON = internalContext.newJsonParser().encodeResourceToString(resource);
-        String value;
+        LinkedList<String> pathStack = new LinkedList<>(Arrays.asList(fieldName.split("\\.")));
+        List<String> valueList = new ArrayList<>();
         try {
             JsonNode json = om.get().readTree(resourceJSON);
-            LinkedList<String> pathStack = new LinkedList<>(Arrays.asList(fieldName.split("\\.")));
-            while (pathStack.size() > 1) {
-                if (!json.has(pathStack.getFirst())) {
-                    return false; // If path doesn't exist in resource return false.
-                    // TODO should consider including value type to ensure proper matching/error otherwise instead of JSON-based impl
-                }
-                json = json.get(pathStack.getFirst());
-                pathStack.removeFirst();
-            }
-            value = json.get(pathStack.getFirst()).asText();
+            findValuesFromJsonPath(json, pathStack, valueList);
         } catch (JsonProcessingException e) {
             return false;
         }
-        // Navigate to
-        // First try to see if value is numeric
-        boolean inputTypeValid = false;
+        for (String value : valueList) {
+            if (coerceAndCompare(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void findValuesFromJsonPath(JsonNode json, LinkedList<String> pathStack, List<String> valueList) {
+        // Just simply always iterate if array
+        if (json instanceof ArrayNode) {
+            for (JsonNode child : json) {
+                findValuesFromJsonPath(child, pathStack, valueList);
+            }
+        }
+        if (pathStack.size() > 0) {
+            String first = pathStack.removeFirst();
+            if (json.has(first)) {
+                findValuesFromJsonPath(json.get(first), pathStack, valueList);
+            }
+        } else {
+            // Return current JSON value
+            valueList.add(json.asText());
+        }
+    }
+
+    private boolean coerceAndCompare(String value) {
         try {
             return compareNumeric(Double.parseDouble(value));
         } catch (NumberFormatException ignored) {
@@ -63,7 +78,13 @@ public class CriterionValue extends Criterion implements Serializable {
         } catch (ParseException ignored) {
         }
         // Finally, do a direct string compare
-        return value.equalsIgnoreCase(value1); // TODO there might be some value in allowing for case sensitive matches
+        if (reln.equals(Relation.IN)) {
+            return Arrays.stream(values).map(String::toLowerCase).collect(Collectors.toSet()).contains(value.toLowerCase(Locale.ROOT));
+        } else if (reln.equals(Relation.EQ)) {
+            return value.equalsIgnoreCase(values[0]); // TODO there might be some value in allowing for case sensitive matches
+        } else {
+            throw new UnsupportedOperationException("Cannot execute " + reln + " on undefined/string datatype");
+        }
     }
 
     @Override
@@ -72,7 +93,7 @@ public class CriterionValue extends Criterion implements Serializable {
     }
 
     private boolean compareNumeric(double input) throws NumberFormatException {
-        double val1 = Double.parseDouble(value1);
+        double val1 = Double.parseDouble(values[0]);
         switch (reln) {
             case LT:
                 return input < val1;
@@ -85,14 +106,18 @@ public class CriterionValue extends Criterion implements Serializable {
             case EQ:
                 return input == val1;
             case BETWEEN:
-                double val2 = Double.parseDouble(value2);
+                double val2 = Double.parseDouble(values[1]);
                 return input >= val1 && input < val2;
+            case IN:
+                Set<Double> valueset = new HashSet<>();
+                Arrays.stream(values).mapToDouble(Double::parseDouble).forEach(valueset::add);
+                return valueset.contains(input);
         }
         return false;
     }
 
     private boolean compareDates(Date input) throws ParseException {
-        Date val1 = sdf.get().parse(value1);
+        Date val1 = sdf.get().parse(values[0]);
         switch (reln) {
             case LT:
                 return input.getTime() < val1.getTime();
@@ -105,26 +130,36 @@ public class CriterionValue extends Criterion implements Serializable {
             case EQ:
                 return input.getTime() == val1.getTime();
             case BETWEEN:
-                Date val2 = sdf.get().parse(value2);
+                Date val2 = sdf.get().parse(values[1]);
                 return input.getTime() >= val1.getTime() && input.getTime() < val2.getTime();
+            case IN:
+                Set<Long> valueset = new HashSet<>();
+                Arrays.stream(values).flatMap(s -> {
+                    try {
+                        return Stream.of(sdf.get().parse(s).getTime());
+                    } catch (ParseException e) {
+                        return Stream.empty();
+                    }
+                }).forEach(valueset::add);
+                return valueset.contains(input.getTime());
         }
         return false;
     }
 
-    public String getValue1() {
-        return value1;
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public void setValue1(String value1) {
-        this.value1 = value1;
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public String getValue2() {
-        return value2;
+    public String[] getValues() {
+        return values;
     }
 
-    public void setValue2(String value2) {
-        this.value2 = value2;
+    public void setValues(String[] values) {
+        this.values = values;
     }
 
     public Relation getReln() {
