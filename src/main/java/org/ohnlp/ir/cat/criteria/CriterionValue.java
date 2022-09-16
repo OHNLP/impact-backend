@@ -20,7 +20,7 @@ public class CriterionValue extends Criterion implements Serializable {
     private String fieldName;
     private String[] values;
     private Relation reln;
-    private FhirContext internalContext = FhirContext.forR4Cached();
+    private transient FhirContext internalContext = FhirContext.forR4Cached();
     private transient ThreadLocal<SimpleDateFormat> sdf;
     private transient ThreadLocal<ObjectMapper> om;
 
