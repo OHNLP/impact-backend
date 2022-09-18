@@ -214,7 +214,7 @@ public class OHDSICDMDataSource implements EHRDataSource {
                         "observation_concept_id, " +
                         "observation_date," +
                         "value_as_number," +
-                        "value_as_string FROM " + cdmSchemaName + ".procedure_occurrence",
+                        "value_as_string FROM " + cdmSchemaName + ".observation",
                 Schema.builder()
                         .addFields(
                                 Schema.Field.of("observation_id", Schema.FieldType.INT64),
