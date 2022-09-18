@@ -41,7 +41,8 @@ public class OHDSICDMDataSource implements EHRDataSource {
                                 Schema.Field.of("day_of_birth", Schema.FieldType.INT32),
                                 Schema.Field.of("race_concept_id", Schema.FieldType.INT32),
                                 Schema.Field.of("ethnicity_concept_id", Schema.FieldType.INT32)
-                        ).build()
+                        ).build(),
+                "person_id"
         ).apply("Convert Person Read to FHIR", ParDo.of(
                 new DoFn<Row, Person>() {
                     @ProcessElement
@@ -96,7 +97,8 @@ public class OHDSICDMDataSource implements EHRDataSource {
                                 Schema.Field.of("person_id", Schema.FieldType.INT64),
                                 Schema.Field.of("condition_concept_id", Schema.FieldType.INT32),
                                 Schema.Field.of("condition_start_date", Schema.FieldType.DATETIME)
-                        ).build()
+                        ).build(),
+                "condition_occurrence_id"
         ).apply("Convert Condition Read to FHIR", ParDo.of(
                 new DoFn<Row, Condition>() {
                     @ProcessElement
@@ -138,7 +140,8 @@ public class OHDSICDMDataSource implements EHRDataSource {
                                 Schema.Field.of("drug_concept_id", Schema.FieldType.INT32),
                                 Schema.Field.of("drug_exposure_start_date", Schema.FieldType.DATETIME),
                                 Schema.Field.of("drug_exposure_end_date", Schema.FieldType.DATETIME)
-                        ).build()
+                        ).build(),
+                "drug_exposure_id"
         ).apply("Convert Drug Exposure Read to FHIR", ParDo.of(
                 new DoFn<Row, MedicationStatement>() {
                     @ProcessElement
@@ -179,7 +182,8 @@ public class OHDSICDMDataSource implements EHRDataSource {
                                 Schema.Field.of("person_id", Schema.FieldType.INT64),
                                 Schema.Field.of("procedure_concept_id", Schema.FieldType.INT32),
                                 Schema.Field.of("procedure_date", Schema.FieldType.DATETIME)
-                        ).build()
+                        ).build(),
+                "procedure_occurrence_id"
         ).apply("Convert Procedure Read to FHIR", ParDo.of(
                 new DoFn<Row, Procedure>() {
                     @ProcessElement
@@ -223,7 +227,8 @@ public class OHDSICDMDataSource implements EHRDataSource {
                                 Schema.Field.of("observation_date", Schema.FieldType.DATETIME),
                                 Schema.Field.of("value_as_number", Schema.FieldType.FLOAT),
                                 Schema.Field.of("value_as_string", Schema.FieldType.STRING)
-                        ).build()
+                        ).build(),
+                "observation_id"
         ).apply("Convert Observation Read to FHIR", ParDo.of(
                 new DoFn<Row, Observation>() {
                     @ProcessElement

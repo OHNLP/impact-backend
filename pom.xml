@@ -358,6 +358,13 @@
       <version>${beam.version}</version>
     </dependency>
 
+    <!-- Adds a dependency on the Beam IO JDBC modules. -->
+    <dependency>
+      <groupId>org.apache.beam</groupId>
+      <artifactId>beam-sdks-java-io-jdbc</artifactId>
+      <version>${beam.version}</version>
+    </dependency>
+
     <!-- HAPI FHIR Dependency for internal data transmission -->
     <dependency>
       <groupId>ca.uhn.hapi.fhir</groupId>

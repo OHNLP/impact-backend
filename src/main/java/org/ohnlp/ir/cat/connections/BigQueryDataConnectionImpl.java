@@ -1,5 +1,6 @@
 package org.ohnlp.ir.cat.connections;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.api.services.bigquery.model.TableRow;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.io.gcp.bigquery.BigQueryIO;
@@ -14,7 +15,12 @@ import org.ohnlp.ir.cat.DataConnection;
 
 public class BigQueryDataConnectionImpl implements DataConnection {
     @Override
-    public PCollection<Row> getForQueryAndSchema(Pipeline pipeline, String query, Schema schema) {
+    public void loadConfig(JsonNode node) {
+
+    }
+
+    @Override
+    public PCollection<Row> getForQueryAndSchema(Pipeline pipeline, String query, Schema schema, String idCol) {
         return pipeline.apply("BigQuery: " + query,
                 BigQueryIO.readTableRowsWithSchema()
                         .fromQuery(query)
