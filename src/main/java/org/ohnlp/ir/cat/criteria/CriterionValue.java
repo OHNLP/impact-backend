@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.hl7.fhir.r4.model.DomainResource;
+import org.ohnlp.ir.cat.structs.ClinicalDataType;
 import org.ohnlp.ir.cat.structs.PatientScore;
+import org.ohnlp.ir.cat.temp.ClinicalEntityType;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CriterionValue extends Criterion implements Serializable {
+    private ClinicalDataType type;
     private String fieldName;
     private String[] values;
     private Relation reln;
@@ -28,6 +31,10 @@ public class CriterionValue extends Criterion implements Serializable {
     public CriterionValue() {
         this.sdf = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
         this.om = ThreadLocal.withInitial(ObjectMapper::new);
+    }
+
+    public ClinicalDataType getType() {
+        return type;
     }
 
     @Override

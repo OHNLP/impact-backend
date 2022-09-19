@@ -13,5 +13,7 @@ public abstract class CompositeCriterion extends Criterion {
         this.subcriterion = subcriterion;
     }
 
-
+    public Criterion[] getSubcriterion() {
+        return subcriterion;
+    }
 }

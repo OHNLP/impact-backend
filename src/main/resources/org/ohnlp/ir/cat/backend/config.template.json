@@ -1,0 +1,45 @@
+{
+  "data": {
+    "ehr": {
+      "connection": {
+        "class": "org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl",
+        "config": {
+          "driverClass": "",
+          "url": "",
+          "user": "",
+          "password": ""
+        }
+      },
+      "dataSource": {
+        "class": "org.ohnlp.ir.cat.ehr.datasource.OHDSICDMDataSource",
+        "config": {}
+      }
+    },
+    "nlp": {
+      "connection": {
+        "class": "org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl",
+        "config": {
+          "driverClass": "",
+          "url": "",
+          "user": "",
+          "password": ""
+        }
+      },
+      "dataSource": {
+        "class": "org.ohnlp.ir.cat.ehr.datasource.OHDSICDMDataSource",
+        "config": {}
+      }
+    },
+    "output": {
+      "connection": {
+        "class": "org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl",
+        "config": {
+          "driverClass": "",
+          "url": "",
+          "user": "",
+          "password": ""
+        }
+      }
+    }
+  }
+}
