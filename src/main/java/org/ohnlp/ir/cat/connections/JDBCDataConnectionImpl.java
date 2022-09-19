@@ -7,12 +7,9 @@ import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.Row;
 import org.joda.time.ReadableDateTime;
-import org.ohnlp.ir.cat.DataConnection;
 
-import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class JDBCDataConnectionImpl implements DataConnection {

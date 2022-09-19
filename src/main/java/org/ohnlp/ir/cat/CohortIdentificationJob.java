@@ -9,6 +9,7 @@ import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.Row;
 import org.ohnlp.ir.cat.connections.BigQueryDataConnectionImpl;
+import org.ohnlp.ir.cat.connections.DataConnection;
 import org.ohnlp.ir.cat.criteria.Criterion;
 import org.ohnlp.ir.cat.criteria.CriterionValue;
 import org.ohnlp.ir.cat.ehr.datasource.EHRDataSource;
