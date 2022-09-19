@@ -89,7 +89,7 @@ public class CriterionValue extends Criterion implements Serializable {
 
     @Override
     public double score(Map<String, PatientScore> scoreByCriterionUID) {
-        return scoreByCriterionUID.get(criterionUID).getScore();
+        return scoreByCriterionUID.containsKey(criterionUID) ? scoreByCriterionUID.get(criterionUID).getScore() : 0.00;
     }
 
     private boolean compareNumeric(double input) throws NumberFormatException {
