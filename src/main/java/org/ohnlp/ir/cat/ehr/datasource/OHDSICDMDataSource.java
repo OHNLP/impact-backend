@@ -8,10 +8,10 @@ import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.Row;
 import org.hl7.fhir.r4.model.*;
+import org.ohnlp.cat.api.criteria.ClinicalEntityType;
+import org.ohnlp.cat.api.criteria.EntityCriterion;
 import org.ohnlp.ir.cat.connections.DataConnection;
 import org.ohnlp.ir.cat.connections.BigQueryDataConnectionImpl;
-import org.ohnlp.ir.cat.criteria.CriterionValue;
-import org.ohnlp.ir.cat.structs.ClinicalDataType;
 
 import java.util.*;
 
@@ -275,7 +275,7 @@ public class OHDSICDMDataSource implements EHRDataSource {
     }
 
     @Override
-    public Set<CriterionValue> convertToLocalTerminology(ClinicalDataType type, CriterionValue input) {
+    public Set<EntityCriterion> convertToLocalTerminology(ClinicalEntityType type, EntityCriterion input) {
         return new HashSet<>(); // TODO
     }
 }

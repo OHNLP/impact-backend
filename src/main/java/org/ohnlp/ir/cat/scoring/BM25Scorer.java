@@ -10,10 +10,10 @@ import org.apache.beam.sdk.transforms.join.CoGroupByKey;
 import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
 import org.apache.beam.sdk.values.*;
 import org.hl7.fhir.r4.model.*;
-import org.ohnlp.ir.cat.criteria.CriterionValue;
+import org.ohnlp.cat.api.cohorts.CandidateScore;
+import org.ohnlp.cat.api.criteria.ClinicalEntityType;
+import org.ohnlp.cat.api.criteria.EntityCriterion;
 import org.ohnlp.ir.cat.ehr.datasource.EHRDataSource;
-import org.ohnlp.ir.cat.structs.ClinicalDataType;
-import org.ohnlp.ir.cat.structs.PatientScore;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -44,10 +44,10 @@ public class BM25Scorer extends Scorer {
             OBSERVATION_PATUID_EXTRACTION = (r) -> ((Observation) r).getSubject().getIdentifier().getValue();
 
 
-    public PCollection<KV<KV<String, String>, PatientScore>> score(
+    public PCollection<KV<KV<String, String>, CandidateScore>> score(
             Pipeline p,
-            Map<String, Set<CriterionValue>> query,
-            ClinicalDataType queryType,
+            Map<String, Set<EntityCriterion>> query,
+            ClinicalEntityType queryType,
             EHRDataSource dataSource) {
 
         PCollection<? extends DomainResource> items = getRawData(p, dataSource, queryType);
@@ -108,13 +108,13 @@ public class BM25Scorer extends Scorer {
         // idf can be accessed at lhs -> rhs
         // tf can be accessed at lhs -> lhs
         // result is in format ((criterion_uid, patient_uid), score_obj)
-        PCollection<KV<KV<String, String>, PatientScore>> scores = getScores(doclen, idf, tf, avgDocLen);
+        PCollection<KV<KV<String, String>, CandidateScore>> scores = getScores(doclen, idf, tf, avgDocLen);
 
         // Now join with evidence IDs and return
         return joinScoresWithEvidence(scores, evidence);
     }
 
-    private PCollection<? extends DomainResource> getRawData(Pipeline p, EHRDataSource dataSource, ClinicalDataType queryType) {
+    private PCollection<? extends DomainResource> getRawData(Pipeline p, EHRDataSource dataSource, ClinicalEntityType queryType) {
         switch (queryType) {
             case PERSON:
                 return dataSource.getPersons(p);
@@ -131,7 +131,7 @@ public class BM25Scorer extends Scorer {
         }
     }
 
-    private SerializableFunction<DomainResource, String> getPatIDExtractorFn(ClinicalDataType queryType) {
+    private SerializableFunction<DomainResource, String> getPatIDExtractorFn(ClinicalEntityType queryType) {
         switch (queryType) {
             case PERSON:
                 return PERSON_PATUID_EXTRACTION;
@@ -148,7 +148,7 @@ public class BM25Scorer extends Scorer {
         }
     }
 
-    private PCollection<KV<String, KV<String, DomainResource>>> filterMatching(PCollection<KV<String, DomainResource>> allRecordsByPatientUID, Map<String, Set<CriterionValue>> query) {
+    private PCollection<KV<String, KV<String, DomainResource>>> filterMatching(PCollection<KV<String, DomainResource>> allRecordsByPatientUID, Map<String, Set<EntityCriterion>> query) {
         return allRecordsByPatientUID.apply(
                 "Query: Filter table to Criteria matching items",
                 ParDo.of(
@@ -159,7 +159,7 @@ public class BM25Scorer extends Scorer {
                                 String patientUID = in.getKey();
                                 DomainResource res = in.getValue();
                                 query.forEach((criterion_uid, resolved_match_criteria) -> {
-                                    for (CriterionValue criterion : resolved_match_criteria) {
+                                    for (EntityCriterion criterion : resolved_match_criteria) {
                                         if (criterion.matches(res)) {
                                             out.output(KV.of(criterion_uid, KV.of(patientUID, res)));
                                             break; // Do not allow multiple matched synonyms to output duplicate
@@ -354,7 +354,7 @@ public class BM25Scorer extends Scorer {
         }));
     }
 
-    private PCollection<KV<KV<String, String>, PatientScore>> getScores(PCollection<KV<String, Long>> doclen, PCollection<Row> idf, PCollection<Row> tf, PCollectionView<Double> avgDocLen) {
+    private PCollection<KV<KV<String, String>, CandidateScore>> getScores(PCollection<KV<String, Long>> doclen, PCollection<Row> idf, PCollection<Row> tf, PCollectionView<Double> avgDocLen) {
         return tf.apply(
                 "BM25 Step 5.1: Join TF, IDF, and docLen for calculation",
                 // Use broadcast joins for efficiency since lhs is always smaller than rhs
@@ -381,12 +381,12 @@ public class BM25Scorer extends Scorer {
         ).apply(
                 "BM25 Step 5.2: Calculate BM25 scores from joined values",
                 ParDo.of(
-                        new DoFn<Row, KV<KV<String, String>, PatientScore>>() {
+                        new DoFn<Row, KV<KV<String, String>, CandidateScore>>() {
                             // Technically row gets can produce NPEs but would never happen due to inner join by definition
                             @SuppressWarnings("ConstantConditions")
                             // TODO find better way to handle/rename nested joined items to something less confusing
                             @ProcessElement
-                            public void process(ProcessContext c, @Element Row in, OutputReceiver<KV<KV<String, String>, PatientScore>> out) {
+                            public void process(ProcessContext c, @Element Row in, OutputReceiver<KV<KV<String, String>, CandidateScore>> out) {
                                 double bm25 = bm25(
                                         in.getRow("lhs").getRow("rhs").getInt64("idf").doubleValue(),
                                         in.getRow("lhs").getRow("lhs").getInt64("tf").doubleValue(),
@@ -398,7 +398,7 @@ public class BM25Scorer extends Scorer {
                                                 KV.of(
                                                         in.getRow("lhs").getRow("lhs").getString("criterion_uid"),
                                                         in.getRow("lhs").getRow("lhs").getString("patient_uid")),
-                                                new PatientScore(
+                                                new CandidateScore(
                                                         in.getRow("lhs").getRow("lhs").getString("patient_uid"),
                                                         bm25,
                                                         new HashSet<>() //  Empty evidence/to be added in next step
@@ -419,24 +419,24 @@ public class BM25Scorer extends Scorer {
         return Math.log(((collsize - numDocsWithTerm + 0.5) / (numDocsWithTerm + 0.5)) + 1);
     }
 
-    private PCollection<KV<KV<String, String>, PatientScore>> joinScoresWithEvidence(PCollection<KV<KV<String, String>, PatientScore>> scores, PCollection<KV<KV<String, String>, Set<String>>> evidence) {
+    private PCollection<KV<KV<String, String>, CandidateScore>> joinScoresWithEvidence(PCollection<KV<KV<String, String>, CandidateScore>> scores, PCollection<KV<KV<String, String>, Set<String>>> evidence) {
         TupleTag<Set<String>> evidenceTag = new TupleTag<>();
-        TupleTag<PatientScore> scoreTag = new TupleTag<>();
+        TupleTag<CandidateScore> scoreTag = new TupleTag<>();
         return KeyedPCollectionTuple.of(evidenceTag, evidence)
                 .and(scoreTag, scores)
                 .apply(CoGroupByKey.create())
                 .apply(
                         "Merge evidence IDs into scores",
                         ParDo.of(
-                                new DoFn<KV<KV<String, String>, CoGbkResult>, KV<KV<String, String>, PatientScore>>() {
+                                new DoFn<KV<KV<String, String>, CoGbkResult>, KV<KV<String, String>, CandidateScore>>() {
                                     @ProcessElement
                                     public void process(
                                             @Element KV<KV<String, String>, CoGbkResult> e,
-                                            OutputReceiver<KV<KV<String, String>, PatientScore>> out
+                                            OutputReceiver<KV<KV<String, String>, CandidateScore>> out
                                     ) {
                                         KV<String, String> key = e.getKey();
                                         Set<String> evidenceSet = e.getValue().getOnly(evidenceTag);
-                                        PatientScore scoreObj = e.getValue().getOnly(scoreTag);
+                                        CandidateScore scoreObj = e.getValue().getOnly(scoreTag);
                                         scoreObj.setEvidenceIDs(evidenceSet);
                                         out.output(
                                                 KV.of(

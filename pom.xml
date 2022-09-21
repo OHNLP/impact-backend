@@ -344,6 +344,12 @@
   </profiles>
 
   <dependencies>
+    <!-- Project API Dependency -->
+    <dependency>
+      <groupId>org.ohnlp.cat</groupId>
+      <artifactId>api</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
     <!-- Adds a dependency on the Beam SDK. -->
     <dependency>
       <groupId>org.apache.beam</groupId>
