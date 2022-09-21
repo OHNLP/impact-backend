@@ -10,6 +10,7 @@ import org.apache.beam.sdk.values.Row;
 import org.hl7.fhir.r4.model.*;
 import org.ohnlp.cat.api.criteria.ClinicalEntityType;
 import org.ohnlp.cat.api.criteria.EntityCriterion;
+import org.ohnlp.cat.api.criteria.EntityValue;
 import org.ohnlp.ir.cat.connections.DataConnection;
 import org.ohnlp.ir.cat.connections.BigQueryDataConnectionImpl;
 
@@ -275,7 +276,8 @@ public class OHDSICDMDataSource implements EHRDataSource {
     }
 
     @Override
-    public Set<EntityCriterion> convertToLocalTerminology(ClinicalEntityType type, EntityCriterion input) {
-        return new HashSet<>(); // TODO
+    public Set<EntityValue> convertToLocalTerminology(ClinicalEntityType type, EntityValue input) {
+        HashSet<EntityValue> ret = new HashSet<>();
+        return ret; // TODO
     }
 }

@@ -14,17 +14,16 @@ import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.PCollectionList;
 import org.apache.beam.sdk.values.Row;
 import org.ohnlp.cat.api.cohorts.CandidateScore;
-import org.ohnlp.cat.api.criteria.ClinicalEntityType;
-import org.ohnlp.cat.api.criteria.Criterion;
-import org.ohnlp.cat.api.criteria.EntityCriterion;
-import org.ohnlp.cat.api.criteria.LogicalCriterion;
+import org.ohnlp.cat.api.criteria.*;
 import org.ohnlp.ir.cat.connections.DataConnection;
+import org.ohnlp.ir.cat.criterion.SynonymExpandedEntityValues;
 import org.ohnlp.ir.cat.ehr.datasource.EHRDataSource;
 import org.ohnlp.ir.cat.scoring.BM25Scorer;
 import org.ohnlp.ir.cat.scoring.Scorer;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -66,9 +65,9 @@ public class CohortIdentificationJob {
         for (Map.Entry<ClinicalEntityType, Map<String, EntityCriterion>> e : leafsByDataType.entrySet()) {
             ClinicalEntityType cdt = e.getKey();
             Map<String, EntityCriterion> leaves = e.getValue();
-            Map<String, Set<EntityCriterion>> ehrExpandedLeafNodes = expandLeafNodes(cdt, leaves, ehrDataSource);
+            expandLeafNodes(cdt, leaves, ehrDataSource);
             // Score based on EHR leaf nodes
-            PCollection<KV<KV<String, String>, CandidateScore>> ehrScores = scorer.score(p, ehrExpandedLeafNodes, cdt, ehrDataSource);
+            PCollection<KV<KV<String, String>, CandidateScore>> ehrScores = scorer.score(p, leaves, cdt, ehrDataSource);
             // TODO combine with nlp results here
             leafScoreList.add(ehrScores);
         }
@@ -177,12 +176,16 @@ public class CohortIdentificationJob {
         }
     }
 
-    private static Map<String, Set<EntityCriterion>> expandLeafNodes(ClinicalEntityType cdt,
-            Map<String, EntityCriterion> leaves, EHRDataSource dataSource) {
-        Map<String, Set<EntityCriterion>> ret = new HashMap<>();
+    private static void expandLeafNodes(ClinicalEntityType cdt,
+                                                       Map<String, EntityCriterion> leaves, EHRDataSource dataSource) {
         leaves.forEach((node_id, criterion) -> {
-            ret.put(node_id, dataSource.convertToLocalTerminology(cdt, criterion));
+            List<EntityValue> converted = new ArrayList<>();
+            for (EntityValue v : criterion.components) {
+                Set<EntityValue> convertedValues = dataSource.convertToLocalTerminology(cdt, v);
+                converted.add(new SynonymExpandedEntityValues(convertedValues));
+            }
+            criterion.setComponents(converted.toArray(new EntityValue[0]));
+            // TODO verify that modifying in-place will not break scoring
         });
-        return ret;
     }
 }

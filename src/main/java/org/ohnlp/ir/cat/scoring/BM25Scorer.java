@@ -46,7 +46,7 @@ public class BM25Scorer extends Scorer {
 
     public PCollection<KV<KV<String, String>, CandidateScore>> score(
             Pipeline p,
-            Map<String, Set<EntityCriterion>> query,
+            Map<String, EntityCriterion> query,
             ClinicalEntityType queryType,
             EHRDataSource dataSource) {
 
@@ -148,7 +148,7 @@ public class BM25Scorer extends Scorer {
         }
     }
 
-    private PCollection<KV<String, KV<String, DomainResource>>> filterMatching(PCollection<KV<String, DomainResource>> allRecordsByPatientUID, Map<String, Set<EntityCriterion>> query) {
+    private PCollection<KV<String, KV<String, DomainResource>>> filterMatching(PCollection<KV<String, DomainResource>> allRecordsByPatientUID, Map<String, EntityCriterion> query) {
         return allRecordsByPatientUID.apply(
                 "Query: Filter table to Criteria matching items",
                 ParDo.of(
@@ -158,13 +158,10 @@ public class BM25Scorer extends Scorer {
                                                 OutputReceiver<KV<String, KV<String, DomainResource>>> out) {
                                 String patientUID = in.getKey();
                                 DomainResource res = in.getValue();
-                                query.forEach((criterion_uid, resolved_match_criteria) -> {
-                                    for (EntityCriterion criterion : resolved_match_criteria) {
+                                query.forEach((criterion_uid, criterion) -> {
                                         if (criterion.matches(res)) {
                                             out.output(KV.of(criterion_uid, KV.of(patientUID, res)));
-                                            break; // Do not allow multiple matched synonyms to output duplicate
                                         }
-                                    }
                                 });
                             }
 
