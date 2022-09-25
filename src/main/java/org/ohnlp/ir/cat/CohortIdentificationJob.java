@@ -15,15 +15,16 @@ import org.apache.beam.sdk.values.PCollectionList;
 import org.apache.beam.sdk.values.Row;
 import org.ohnlp.cat.api.cohorts.CandidateScore;
 import org.ohnlp.cat.api.criteria.*;
+import org.ohnlp.cat.api.ehr.EHRResourceProvider;
+import org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider;
 import org.ohnlp.ir.cat.connections.DataConnection;
 import org.ohnlp.ir.cat.criterion.SynonymExpandedEntityValues;
-import org.ohnlp.ir.cat.ehr.datasource.EHRDataSource;
+import org.ohnlp.ir.cat.ehr.datasource.ClinicalResourceDataSource;
 import org.ohnlp.ir.cat.scoring.BM25Scorer;
 import org.ohnlp.ir.cat.scoring.Scorer;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -42,11 +43,12 @@ public class CohortIdentificationJob {
         JsonNode backendConfig = new ObjectMapper().readTree(CohortIdentificationJob.class.getResourceAsStream("/org/ohnlp/ir/cat/backend/config.json"));
         JsonNode ehrConfig = backendConfig.get("data").get("ehr");
         String ehrDataConnectionClazz = ehrConfig.get("connection").get("class").asText();
-        DataConnection ehr = (DataConnection) instantiateZeroArgumentConstructorClass(ehrDataConnectionClazz);
-        ehr.loadConfig(ehrConfig.get("connection").get("config"));
-        String ehrDataSourceClazz = ehrConfig.get("dataSource").get("class").asText();
-        EHRDataSource ehrDataSource = (EHRDataSource) instantiateZeroArgumentConstructorClass(ehrDataSourceClazz);;
-        ehrDataSource.loadConfig(ehrConfig.get("dataSource").get("config"));
+        DataConnection ehrConn = (DataConnection) instantiateZeroArgumentConstructorClass(ehrDataConnectionClazz);
+        ehrConn.loadConfig(ehrConfig.get("connection").get("config"));
+        String ehrResourceProviderClazz = ehrConfig.get("resourceProvider").get("class").asText();
+        ClinicalResourceDataSource ehrDataSource = new ClinicalResourceDataSource();
+        ehrDataSource.setEhrDataConnection(ehrConn);
+        ehrDataSource.setResourceProvider((EHRResourceProvider) instantiateZeroArgumentConstructorClass(ehrResourceProviderClazz)); // TODO init config
         String outputDataConnectionClazz = backendConfig.get("data").get("output").get("connection").get("class").asText();
         DataConnection out = (DataConnection) instantiateZeroArgumentConstructorClass(outputDataConnectionClazz);
         out.loadConfig(backendConfig.get("data").get("output").get("connection").get("config"));
@@ -177,11 +179,11 @@ public class CohortIdentificationJob {
     }
 
     private static void expandLeafNodes(ClinicalEntityType cdt,
-                                                       Map<String, EntityCriterion> leaves, EHRDataSource dataSource) {
+                                                       Map<String, EntityCriterion> leaves, ClinicalResourceDataSource dataSource) {
         leaves.forEach((node_id, criterion) -> {
             List<EntityValue> converted = new ArrayList<>();
             for (EntityValue v : criterion.components) {
-                Set<EntityValue> convertedValues = dataSource.convertToLocalTerminology(cdt, v);
+                Set<EntityValue> convertedValues = dataSource.getResourceProvider().convertToLocalTerminology(cdt, v);
                 converted.add(new SynonymExpandedEntityValues(convertedValues));
             }
             criterion.setComponents(converted.toArray(new EntityValue[0]));

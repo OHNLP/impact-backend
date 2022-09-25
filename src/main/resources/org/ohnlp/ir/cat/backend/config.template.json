@@ -10,8 +10,8 @@
           "password": ""
         }
       },
-      "dataSource": {
-        "class": "org.ohnlp.ir.cat.ehr.datasource.OHDSICDMDataSource",
+      "resourceProvider": {
+        "class": "org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider",
         "config": {}
       }
     },
@@ -25,8 +25,8 @@
           "password": ""
         }
       },
-      "dataSource": {
-        "class": "org.ohnlp.ir.cat.ehr.datasource.OHDSICDMDataSource",
+      "resourceProvider": {
+        "class": "org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider",
         "config": {}
       }
     },

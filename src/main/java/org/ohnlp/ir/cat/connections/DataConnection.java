@@ -6,6 +6,8 @@ import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.Row;
 
+import java.util.Map;
+
 public interface DataConnection {
     /**
      * Loads data connection settings from configuration

@@ -13,7 +13,7 @@ import org.hl7.fhir.r4.model.*;
 import org.ohnlp.cat.api.cohorts.CandidateScore;
 import org.ohnlp.cat.api.criteria.ClinicalEntityType;
 import org.ohnlp.cat.api.criteria.EntityCriterion;
-import org.ohnlp.ir.cat.ehr.datasource.EHRDataSource;
+import org.ohnlp.ir.cat.ehr.datasource.ClinicalResourceDataSource;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class BM25Scorer extends Scorer {
             Pipeline p,
             Map<String, EntityCriterion> query,
             ClinicalEntityType queryType,
-            EHRDataSource dataSource) {
+            ClinicalResourceDataSource dataSource) {
 
         PCollection<? extends DomainResource> items = getRawData(p, dataSource, queryType);
 
@@ -114,21 +114,8 @@ public class BM25Scorer extends Scorer {
         return joinScoresWithEvidence(scores, evidence);
     }
 
-    private PCollection<? extends DomainResource> getRawData(Pipeline p, EHRDataSource dataSource, ClinicalEntityType queryType) {
-        switch (queryType) {
-            case PERSON:
-                return dataSource.getPersons(p);
-            case CONDITION:
-                return dataSource.getConditions(p);
-            case PROCEDURE:
-                return dataSource.getProcedures(p);
-            case MEDICATION:
-                return dataSource.getMedications(p);
-            case OBSERVATION:
-                return dataSource.getObservations(p);
-            default:
-                throw new UnsupportedOperationException("Unknown query type " + queryType);
-        }
+    private PCollection<? extends DomainResource> getRawData(Pipeline p, ClinicalResourceDataSource dataSource, ClinicalEntityType queryType) {
+        return dataSource.getResources(p, queryType);
     }
 
     private SerializableFunction<DomainResource, String> getPatIDExtractorFn(ClinicalEntityType queryType) {
