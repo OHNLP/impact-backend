@@ -46,7 +46,7 @@ public class CohortIdentificationJob {
         ehrConn.loadConfig(ehrConfig.get("connection").get("config"));
         String ehrResourceProviderClazz = ehrConfig.get("resourceProvider").get("class").asText();
         ClinicalResourceDataSource ehrDataSource = new ClinicalResourceDataSource();
-        ehrDataSource.setEhrDataConnection(ehrConn);
+        ehrDataSource.setDataConnection(ehrConn);
         ehrDataSource.setResourceProvider((ResourceProvider) instantiateZeroArgumentConstructorClass(ehrResourceProviderClazz)); // TODO init config
         String outputDataConnectionClazz = backendConfig.get("data").get("output").get("connection").get("class").asText();
         DataConnection out = (DataConnection) instantiateZeroArgumentConstructorClass(outputDataConnectionClazz);

@@ -1,6 +1,5 @@
 package org.ohnlp.ir.cat.ehr.datasource;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.transforms.DoFn;
 import org.apache.beam.sdk.transforms.ParDo;
@@ -10,20 +9,16 @@ import org.apache.beam.sdk.values.Row;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.ohnlp.cat.api.criteria.ClinicalEntityType;
 import org.ohnlp.cat.api.ehr.ResourceProvider;
-import org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider;
 import org.ohnlp.ir.cat.connections.DataConnection;
-import org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl;
-
-import java.util.Map;
 
 public class ClinicalResourceDataSource {
     private ResourceProvider resourceProvider;
-    private DataConnection ehrDataConnection;
+    private DataConnection dataConnection;
 
 
     public PCollection<DomainResource> getResources(Pipeline pipeline, ClinicalEntityType type) {
         SerializableFunction<Row, DomainResource> mapFunc = resourceProvider.getRowToResourceMapper(type);
-        return ehrDataConnection.getForQueryAndSchema(
+        return dataConnection.getForQueryAndSchema(
                 pipeline,
                 resourceProvider.getQuery(type),
                 resourceProvider.getQuerySchema(type),
@@ -44,11 +39,11 @@ public class ClinicalResourceDataSource {
         this.resourceProvider = resourceProvider;
     }
 
-    public DataConnection getEhrDataConnection() {
-        return ehrDataConnection;
+    public DataConnection getDataConnection() {
+        return dataConnection;
     }
 
-    public void setEhrDataConnection(DataConnection ehrDataConnection) {
-        this.ehrDataConnection = ehrDataConnection;
+    public void setDataConnection(DataConnection dataConnection) {
+        this.dataConnection = dataConnection;
     }
 }
