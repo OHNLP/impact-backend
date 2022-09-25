@@ -9,7 +9,7 @@ import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.Row;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.ohnlp.cat.api.criteria.ClinicalEntityType;
-import org.ohnlp.cat.api.ehr.EHRResourceProvider;
+import org.ohnlp.cat.api.ehr.ResourceProvider;
 import org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider;
 import org.ohnlp.ir.cat.connections.DataConnection;
 import org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl;
@@ -17,7 +17,7 @@ import org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl;
 import java.util.Map;
 
 public class ClinicalResourceDataSource {
-    private EHRResourceProvider resourceProvider;
+    private ResourceProvider resourceProvider;
     private DataConnection ehrDataConnection;
 
 
@@ -36,11 +36,11 @@ public class ClinicalResourceDataSource {
         }));
     }
 
-    public EHRResourceProvider getResourceProvider() {
+    public ResourceProvider getResourceProvider() {
         return resourceProvider;
     }
 
-    public void setResourceProvider(EHRResourceProvider resourceProvider) {
+    public void setResourceProvider(ResourceProvider resourceProvider) {
         this.resourceProvider = resourceProvider;
     }
 

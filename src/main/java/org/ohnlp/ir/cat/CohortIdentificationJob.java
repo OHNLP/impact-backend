@@ -15,8 +15,7 @@ import org.apache.beam.sdk.values.PCollectionList;
 import org.apache.beam.sdk.values.Row;
 import org.ohnlp.cat.api.cohorts.CandidateScore;
 import org.ohnlp.cat.api.criteria.*;
-import org.ohnlp.cat.api.ehr.EHRResourceProvider;
-import org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider;
+import org.ohnlp.cat.api.ehr.ResourceProvider;
 import org.ohnlp.ir.cat.connections.DataConnection;
 import org.ohnlp.ir.cat.criterion.SynonymExpandedEntityValues;
 import org.ohnlp.ir.cat.ehr.datasource.ClinicalResourceDataSource;
@@ -48,7 +47,7 @@ public class CohortIdentificationJob {
         String ehrResourceProviderClazz = ehrConfig.get("resourceProvider").get("class").asText();
         ClinicalResourceDataSource ehrDataSource = new ClinicalResourceDataSource();
         ehrDataSource.setEhrDataConnection(ehrConn);
-        ehrDataSource.setResourceProvider((EHRResourceProvider) instantiateZeroArgumentConstructorClass(ehrResourceProviderClazz)); // TODO init config
+        ehrDataSource.setResourceProvider((ResourceProvider) instantiateZeroArgumentConstructorClass(ehrResourceProviderClazz)); // TODO init config
         String outputDataConnectionClazz = backendConfig.get("data").get("output").get("connection").get("class").asText();
         DataConnection out = (DataConnection) instantiateZeroArgumentConstructorClass(outputDataConnectionClazz);
         out.loadConfig(backendConfig.get("data").get("output").get("connection").get("config"));
