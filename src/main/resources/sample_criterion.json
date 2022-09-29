@@ -1,0 +1,295 @@
+{
+  "nodeUID": "a156875b-3c91-4d3a-8c00-7f2fdd5cbd38",
+  "nodeType": "LOGICAL",
+  "type": "AND",
+  "title": "root",
+  "description": "root",
+  "children": [
+    {
+      "nodeUID": "8ef3689f-5a5c-4495-97c6-967a90ca589a",
+      "nodeType": "LOGICAL",
+      "type": "AND",
+      "title": "Inclusion Criteria",
+      "description": "All responses must be “Yes” unless specified as “NA”",
+      "children": [
+        {
+          "nodeUID": "878b2e51-8262-478a-b35d-0784b773f1c3",
+          "nodeType": "ENTITY",
+          "title": "Age >= 18 years",
+          "description": "The age of the participant must be greater than 18.",
+          "type": "PERSON",
+          "components": [
+            {
+              "valuePath": "PERSON_DOB",
+              "reln": "LT",
+              "values": [
+                "2005-10-01"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "e4b4d7d7-7276-4067-b981-d4c2557c2b38",
+          "nodeType": "LOGICAL",
+          "type": "MIN_OR",
+          "numericModifier": 1,
+          "title": "Gastroesophageal reflux disease (GERD)",
+          "description": "Gastroesophageal reflux disease (GERD)",
+          "children": [
+            {
+              "nodeUID": "cb8274b5-302a-43dc-b852-817653be600f",
+              "nodeType": "ENTITY",
+              "title": "a. Gastroesophageal reflux disease defined by diagnosis",
+              "description": "Gastroesophageal reflux disease defined by diagnosis. ICD-9: 530.81, ICD-10: K21.9",
+              "type": "CONDITION",
+              "components": [
+                {
+                  "valuePath": "CONDITION_CODE",
+                  "reln": "EQ",
+                  "values": [
+                    "Gastroesophageal reflux disease"
+                  ]
+                }
+              ]
+
+            },
+            {
+              "nodeUID": "5d65c3fa-a262-4182-b2c3-b28a884dde59",
+              "nodeType": "ENTITY",
+              "title": "b. GERD defined by drug, >= 3 months over 5 years",
+              "description": "GERD defined by drug, duration of use >= 3 months over the last 5 years. Medication includes: omeprazole, esomeprazole, pantoprazole, rabeprazole, dexlansoprazole, lansoprazole, ranitidine, famotidine, cimetidine",
+              "type": "MEDICATION",
+              "components": [
+                {
+                  "valuePath": "MEDICATION_CODE",
+                  "reln": "IN",
+                  "values": [
+                    "omeprazole",
+                    "esomeprazole",
+                    "pantoprazole",
+                    "rabeprazole",
+                    "dexlansoprazole",
+                    "lansoprazole",
+                    "ranitidine",
+                    "famotidine",
+                    "cimetidine"
+                  ]
+                }
+              ]
+            },
+            {
+              "nodeUID": "e3e63c9d-396f-4109-8d28-3e96cf07af05",
+              "nodeType": "ENTITY",
+              "title": "c. GERD defined by prior endoscopic diagnosis of erosive esophagitis",
+              "description": "GERD defined by prior endoscopic diagnosis of erosive esophagitis. ICD-9: 530.19, ICD-10: K21.0",
+              "type": "CONDITION",
+              "components": [
+                {
+                  "valuePath": "CONDITION_CODE",
+                  "reln": "IN",
+                  "values": [
+                    "erosive esophagitis"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "79fd0ad7-8352-4da1-b28b-6618434e576b",
+          "nodeType": "ENTITY",
+          "title": "Male",
+          "description": "The patient must be male.",
+          "type": "PERSON",
+          "components": [
+            {
+              "valuePath": "PERSON_GENDER",
+              "reln": "EQ",
+              "values": [
+                "male"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "e5c7bdb5-a831-4315-ab6d-ad327acefa45",
+          "nodeType": "ENTITY",
+          "title": "Obesity (BMI>=30)",
+          "description": "Obesity defined as body mass index greater than equal to 30.",
+          "type": "OBSERVATION",
+          "components": [
+            {
+              "valuePath": "OBSERVATION_CODE",
+              "reln": "EQ",
+              "values": [
+                "BMI"
+              ]
+            },
+            {
+              "valuePath": "OBSERVATION_VALUE",
+              "reln": "GTE",
+              "values": [
+                "30"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeUID": "1cdb38df-e830-416b-8dee-74f92fd7f1a6",
+      "nodeType": "LOGICAL",
+      "type": "NOT",
+      "title": "Exclusion Criteria",
+      "description": "All responses must be “No”",
+      "children": [
+        {
+          "nodeUID": "a80b8335-85f8-4335-ba72-1330ba657de0",
+          "nodeType": "ENTITY",
+          "title": "Previous history of esophageal adenocarcinoma/cancer, esophageal squamous carcinoma",
+          "description": "Previous history of esophageal adenocarcinoma/cancer, esophageal squamous carcinoma. ICD-9: 150.9, ICD-10: C15.9",
+          "type": "CONDITION",
+          "components": [
+            {
+              "valuePath": "CONDITION_CODE",
+              "reln": "IN",
+              "values": [
+                "esophageal adenocarcinoma",
+                "esophageal cancer",
+                "esophageal squamous carcinoma"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "88d82f7a-7be5-448f-b25a-3f9f0074b033",
+          "nodeType": "ENTITY",
+          "title": "Previous history of endoscopic ablation for Barrett's esophagus",
+          "description": "Previous history of endoscopic ablation for Barrett's esophagus. CPT-4: 43229, 43270, 43228, 43258",
+          "type": "PROCEDURE",
+          "components": [
+            {
+              "valuePath": "PROCEDURE_CODE",
+              "reln": "IN",
+              "values": [
+                "endoscopic ablation"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "08eaaba2-2181-410d-8b20-0e2b1c684e6d",
+          "nodeType": "ENTITY",
+          "title": "Previous history of esophageal squamous dysplasia",
+          "description": "Previous history of esophageal squamous dysplasia. ICD-9: 622.10, ICD-10: N87.9",
+          "type": "CONDITION",
+          "components": [
+            {
+              "valuePath": "CONDITION_CODE",
+              "reln": "IN",
+              "values": [
+                "esophageal squamous dysplasia"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "21ff290c-9cd0-47d6-9b80-23ea98f3f24b",
+          "nodeType": "ENTITY",
+          "title": "Current Treatment (drug) with oral anticoagulation - warfarin",
+          "description": "Current Treatment (drug) with oral anticoagulation - warfarin.",
+          "type": "MEDICATION",
+          "components": [
+            {
+              "valuePath": "MEDICATION_CODE",
+              "reln": "IN",
+              "values": [
+                "warfarin"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "199df14e-4bb9-4cdd-a79d-344e410441ee",
+          "nodeType": "ENTITY",
+          "title": "Current drug w/ Coumadin",
+          "description": "Current Treatment (drug) with oral anticoagulation - Coumadin. ",
+          "type": "MEDICATION",
+          "components": [
+            {
+              "valuePath": "MEDICATION_CODE",
+              "reln": "IN",
+              "values": [
+                "Coumadin"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "8eb735f1-ddc8-4749-bd7e-d767bbe1567f",
+          "nodeType": "ENTITY",
+          "title": "History of cirrhosis",
+          "description": "History of cirrhosis. ICD-9: 571.5, ICD-10: K74.60",
+          "type": "CONDITION",
+          "components": [
+            {
+              "valuePath": "CONDITION_CODE",
+              "reln": "IN",
+              "values": [
+                "cirrhosis"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "2198d20c-4670-460b-98ee-342880bdc838",
+          "nodeType": "ENTITY",
+          "title": "History of esophageal varices",
+          "description": "History of esophageal varices. ICD-9: 456.20, ICD-10: I85.00",
+          "type": "CONDITION",
+          "components": [
+            {
+              "valuePath": "CONDITION_CODE",
+              "reln": "IN",
+              "values": [
+                "esophageal varices"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "cc1d32f0-87bc-46eb-b29f-6409022d6f58",
+          "nodeType": "ENTITY",
+          "title": "History of Barrett’s esophagus",
+          "description": "History of Barrett’s esophagus. ICD-9: 530.85, ICD-10: K22.7, K22.710, K22.711, K22.719",
+          "type": "CONDITION",
+          "components": [
+            {
+              "valuePath": "CONDITION_CODE",
+              "reln": "IN",
+              "values": [
+                "Barrett’s esophagus"
+              ]
+            }
+          ]
+        },
+        {
+          "nodeUID": "5d76a9ba-19af-4b8a-8b8f-3d279aa2798e",
+          "nodeType": "ENTITY",
+          "title": "History of endoscopy in the last 5 years",
+          "description": "History of endoscopy in the last 5 years. CPT-4: 43235-43270",
+          "type": "PROCEDURE",
+          "components": [
+            {
+              "valuePath": "PROCEDURE_CODE",
+              "reln": "IN",
+              "values": [
+                "endoscopy"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
