@@ -1,6 +1,10 @@
 {
-  "data": {
+  "resourceProviders": {
     "ehr": {
+      "provider": {
+        "class": "org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider",
+        "config": {}
+      },
       "connection": {
         "class": "org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl",
         "config": {
@@ -10,37 +14,33 @@
           "user": "",
           "password": ""
         }
-      },
-      "resourceProvider": {
-        "class": "org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider",
-        "config": {}
       }
     },
     "nlp": {
-      "connection": {
-        "class": "org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl",
-        "config": {
-          "driverClass": "",
-          "url": "",
-          "user": "",
-          "password": ""
-        }
-      },
-      "resourceProvider": {
-        "class": "org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider",
+      "provider": {
+        "class": "org.ohnlp.cat.common.impl.ehr.OHDSICDMNLPResourceProvider",
         "config": {}
-      }
-    },
-    "output": {
+      },
       "connection": {
         "class": "org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl",
         "config": {
+          "partitions": 48,
           "driverClass": "",
           "url": "",
           "user": "",
           "password": ""
         }
       }
+    }
+  },
+  "resultsConnection": {
+    "class": "org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl",
+    "config": {
+      "partitions": 48,
+      "driverClass": "",
+      "url": "",
+      "user": "",
+      "password": ""
     }
   }
 }

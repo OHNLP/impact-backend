@@ -151,7 +151,7 @@ public class CohortIdentificationJob {
     }
 
 
-    private static Object instantiateZeroArgumentConstructorClass(String clazz)
+    public static Object instantiateZeroArgumentConstructorClass(String clazz)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
             InstantiationException, IllegalAccessException {
         return Class.forName(clazz).getDeclaredConstructor().newInstance();

@@ -1,5 +1,7 @@
 package org.ohnlp.ir.cat;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.schemas.Schema;
@@ -11,6 +13,7 @@ import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.PCollectionList;
 import org.apache.beam.sdk.values.Row;
+import org.codehaus.jackson.node.ObjectNode;
 import org.ohnlp.cat.api.cohorts.CandidateScore;
 import org.ohnlp.cat.api.criteria.ClinicalEntityType;
 import org.ohnlp.cat.api.criteria.Criterion;
@@ -25,6 +28,7 @@ import org.ohnlp.ir.cat.scoring.BM25Scorer;
 import org.ohnlp.ir.cat.scoring.Scorer;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
@@ -32,7 +36,7 @@ import java.util.stream.StreamSupport;
  * A sample cohort identification job using hardcoded/non-configurable settings
  */
 public class TestCohortIdentificationJob {
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         // TODO split components here into individual tests
         UUID jobUID = UUID.randomUUID();
         System.out.println("Executing sample cohort identification job with job UID " + jobUID);
@@ -42,16 +46,33 @@ public class TestCohortIdentificationJob {
         System.out.println("Executing pipeline with criterion:\r\n " + om.writerWithDefaultPrettyPrinter().writeValueAsString(criterion));
         System.out.println("==============\r\n");
 
-        // Provision resource providers/connections and other required classes
+        // Provision resource providers/connections and other required classes from config
         Pipeline p = Pipeline.create();
-        ResourceProvider ehrResourceProvider = new OHDSICDMResourceProvider();
-        ResourceProvider nlpResourceProvider = new OHDSICDMNLPResourceProvider();
-        DataConnection ohdsiCDMConnection = new JDBCDataConnectionImpl();
-        DataConnection resultsConnection = new JDBCDataConnectionImpl(); // TODO connection info
+        Map<String, ClinicalResourceDataSource> resourceDataSources = new HashMap<>();
+        JsonNode config = om.readTree(TestCohortIdentificationJob.class.getResourceAsStream("/config.json"));
+        config.get("resourceProviders").fields().forEachRemaining(
+                (e) -> {
+                    String id = e.getKey();
+                    JsonNode settings = e.getValue();
+                    JsonNode provider = settings.get("provider");
+                    JsonNode connection = settings.get("connection");
+                    try {
+                        ResourceProvider providerInstance = (ResourceProvider) CohortIdentificationJob.instantiateZeroArgumentConstructorClass(provider.get("class").asText());
+                        providerInstance.init(om.convertValue(provider.get("config"), new TypeReference<>() {}));
+                        DataConnection connectionInstance = (DataConnection) CohortIdentificationJob.instantiateZeroArgumentConstructorClass(connection.get("class").asText());
+                        connectionInstance.loadConfig(connection.get("config"));
+                        resourceDataSources.put(id, new ClinicalResourceDataSource(providerInstance, connectionInstance));
+                    } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
+                             InstantiationException | IllegalAccessException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+        );
+        JsonNode outputSettings = config.get("resultsConnection");
+        DataConnection resultsConnection = (DataConnection) CohortIdentificationJob.instantiateZeroArgumentConstructorClass(outputSettings.get("class").asText());
+        resultsConnection.loadConfig(outputSettings.get("config"));
 
-        // Construct relevant data sources
-        ClinicalResourceDataSource ehrDataSource = new ClinicalResourceDataSource(ehrResourceProvider, ohdsiCDMConnection);
-        ClinicalResourceDataSource nlpDataSource = new ClinicalResourceDataSource(nlpResourceProvider, ohdsiCDMConnection);
+
 
         // Get leafs by data type
         Map<ClinicalEntityType, Map<String, EntityCriterion>> leafsByDataType = CohortIdentificationJob.getLeafsByDataType(criterion);
@@ -65,10 +86,12 @@ public class TestCohortIdentificationJob {
         for (Map.Entry<ClinicalEntityType, Map<String, EntityCriterion>> e : leafsByDataType.entrySet()) {
             ClinicalEntityType cdt = e.getKey();
             Map<String, EntityCriterion> leaves = e.getValue();
-            // Score based on EHR leaf nodes
-            PCollection<KV<KV<String, String>, CandidateScore>> ehrScores = scorer.score(p, leaves, cdt, ehrDataSource);
+            // Score for each data source
+            resourceDataSources.forEach((id, src) -> {
+                PCollection<KV<KV<String, String>, CandidateScore>> scores = scorer.score(p, leaves, cdt, src);
+                leafScoreList.add(scores);
+            });
             // TODO combine with nlp results here
-            leafScoreList.add(ehrScores);
         }
         // Union all the leaf scores across the disparate clinical data types
         PCollection<KV<KV<String, String>, CandidateScore>> leafScores = PCollectionList.of(leafScoreList).apply(Flatten.pCollections());
@@ -96,7 +119,15 @@ public class TestCohortIdentificationJob {
                             public void process(ProcessContext c) {
                                 HashMap<UUID, CandidateScore> leafScores = new HashMap<>();
                                 StreamSupport.stream(c.element().getValue().spliterator(), false)
-                                        .forEach(e -> leafScores.put(UUID.fromString(e.getKey()), e.getValue()));
+                                        .forEach(e -> leafScores.merge(UUID.fromString(e.getKey()), e.getValue(), (v1, v2) -> {
+                                            CandidateScore score = new CandidateScore();
+                                            score.setScore(v1.getScore() + v2.getScore());
+                                            score.setPatientUID(v1.getPatientUID());
+                                            score.setEvidenceIDs(new HashSet<>(v1.getEvidenceIDs()));
+                                            score.getEvidenceIDs().addAll(v2.getEvidenceIDs());
+                                            score.setDataSourceCount(v1.getDataSourceCount() + v2.getDataSourceCount());
+                                            return score;
+                                        }));
                                 c.output(
                                         KV.of(
                                                 c.element().getKey(), // patient_uid
