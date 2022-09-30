@@ -112,14 +112,14 @@ public class CohortIdentificationJob {
         // Write both evidence and scores to DB
         Schema scoreSchema = Schema.of(
                 Schema.Field.of("job_uid", Schema.FieldType.STRING),
-                Schema.Field.of("patient_uid", Schema.FieldType.STRING),
+                Schema.Field.of("person_uid", Schema.FieldType.STRING),
                 Schema.Field.of("score", Schema.FieldType.DOUBLE)
         );
         Schema evidenceSchema = Schema.of(
                 Schema.Field.of("job_uid", Schema.FieldType.STRING),
-                Schema.Field.of("patient_uid", Schema.FieldType.STRING),
                 Schema.Field.of("criterion_uid", Schema.FieldType.STRING),
-                Schema.Field.of("criterion_score", Schema.FieldType.DOUBLE),
+                Schema.Field.of("patient_uid", Schema.FieldType.STRING),
+//                Schema.Field.of("criterion_score", Schema.FieldType.DOUBLE),
                 Schema.Field.of("evidence_id", Schema.FieldType.STRING)
         );
         out.write("scores", scoresByPatientUid.apply(ParDo.of(
@@ -157,13 +157,13 @@ public class CohortIdentificationJob {
         return Class.forName(clazz).getDeclaredConstructor().newInstance();
     }
 
-    private static Map<ClinicalEntityType, Map<String, EntityCriterion>> getLeafsByDataType(Criterion criterion) {
+    public static Map<ClinicalEntityType, Map<String, EntityCriterion>> getLeafsByDataType(Criterion criterion) {
         Map<ClinicalEntityType, Map<String, EntityCriterion>> ret = new HashMap<>();
         getLeafsByDataTypeRecurs(criterion, ret);
         return ret;
     }
 
-    private static void getLeafsByDataTypeRecurs(Criterion criterion, Map<ClinicalEntityType, Map<String, EntityCriterion>> leafsByCDT) {
+    public static void getLeafsByDataTypeRecurs(Criterion criterion, Map<ClinicalEntityType, Map<String, EntityCriterion>> leafsByCDT) {
         if (criterion instanceof EntityCriterion) { // Leaf Node
             ClinicalEntityType type = ((EntityCriterion)criterion).getType();
             leafsByCDT.computeIfAbsent(type, k -> new HashMap<>())
@@ -177,16 +177,17 @@ public class CohortIdentificationJob {
         }
     }
 
-    private static void expandLeafNodes(ClinicalEntityType cdt,
+    public static void expandLeafNodes(ClinicalEntityType cdt,
                                                        Map<String, EntityCriterion> leaves, ClinicalResourceDataSource dataSource) {
-        leaves.forEach((node_id, criterion) -> {
-            List<EntityValue> converted = new ArrayList<>();
-            for (EntityValue v : criterion.components) {
-                Set<EntityValue> convertedValues = dataSource.getResourceProvider().convertToLocalTerminology(cdt, v);
-                converted.add(new SynonymExpandedEntityValues(convertedValues));
-            }
-            criterion.setComponents(converted.toArray(new EntityValue[0]));
-            // TODO verify that modifying in-place will not break scoring
-        });
+        // TODO currently we do nothing because entityValues are provided for us
+//        leaves.forEach((node_id, criterion) -> {
+//            List<EntityValue> converted = new ArrayList<>();
+//            for (EntityValue v : criterion.components) {
+////                Set<EntityValue> convertedValues = dataSource.getResourceProvider().convertToLocalTerminology(cdt, v);
+//                converted.add(new SynonymExpandedEntityValues(v));
+//            }
+//            criterion.setComponents(converted.toArray(new EntityValue[0]));
+//            // TODO verify that modifying in-place will not break scoring
+//        });
     }
 }

@@ -15,17 +15,26 @@ import java.util.stream.Collectors;
 public class JDBCDataConnectionImpl implements DataConnection {
 
     private int numPartitions;
+    private JdbcIO.DataSourceConfiguration config;
 
     @Override
     public void loadConfig(JsonNode node) {
-        this.numPartitions = 48;
-        //TODO
+        this.numPartitions = node.has("partitions") ? node.get("partitions").asInt() : 1;
+        String driverClass = node.get("driverClass").asText();
+        String jdbcURL = node.get("url").asText();
+        this.config = JdbcIO.DataSourceConfiguration.create(driverClass, jdbcURL);
+        if (node.has("user")) {
+            String user = node.get("user").asText();
+            String pass = node.get("pass").asText();
+            config = config.withUsername(user).withPassword(pass);
+        }
     }
 
     @Override
     public PCollection<Row> getForQueryAndSchema(Pipeline pipeline, String query, Schema schema, String idCol) {
         JdbcIO.ReadWithPartitions<Row, Long> partitionRead = JdbcIO.<Row>readWithPartitions()
                 .withTable(query)
+                .withDataSourceConfiguration(config)
                 .withRowOutput();
         if (idCol != null) {
             partitionRead = partitionRead.withPartitionColumn(idCol).withNumPartitions(this.numPartitions);

@@ -15,6 +15,13 @@ public class ClinicalResourceDataSource {
     private ResourceProvider resourceProvider;
     private DataConnection dataConnection;
 
+    public ClinicalResourceDataSource() {}
+
+    public ClinicalResourceDataSource(ResourceProvider resourceProvider, DataConnection dataConnection) {
+        this.resourceProvider = resourceProvider;
+        this.dataConnection = dataConnection;
+    }
+
 
     public PCollection<DomainResource> getResources(Pipeline pipeline, ClinicalEntityType type) {
         SerializableFunction<Row, DomainResource> mapFunc = resourceProvider.getRowToResourceMapper(type);

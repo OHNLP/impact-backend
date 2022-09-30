@@ -4,6 +4,7 @@
       "connection": {
         "class": "org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl",
         "config": {
+          "partitions": 48,
           "driverClass": "",
           "url": "",
           "user": "",
