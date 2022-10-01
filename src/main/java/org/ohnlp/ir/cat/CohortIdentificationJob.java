@@ -1,5 +1,6 @@
 package org.ohnlp.ir.cat;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.beam.sdk.Pipeline;
@@ -21,6 +22,7 @@ import org.ohnlp.ir.cat.criterion.SynonymExpandedEntityValues;
 import org.ohnlp.ir.cat.ehr.datasource.ClinicalResourceDataSource;
 import org.ohnlp.ir.cat.scoring.BM25Scorer;
 import org.ohnlp.ir.cat.scoring.Scorer;
+import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
@@ -34,120 +36,156 @@ public class CohortIdentificationJob {
         // Read in Pipeline Options
         PipelineOptionsFactory.register(JobConfiguration.class);
         JobConfiguration jobConfig = PipelineOptionsFactory.fromArgs(args).create().as(JobConfiguration.class);
+        /// Provision resource providers/connections and other required classes from config
+        ObjectMapper om = new ObjectMapper();
+        Pipeline p = Pipeline.create(jobConfig);
+        Map<String, ClinicalResourceDataSource> resourceDataSources = new HashMap<>();
+        JsonNode config = om.readTree(CohortIdentificationJob.class.getResourceAsStream("/config.json"));
+        config.get("resourceProviders").fields().forEachRemaining(
+                (e) -> {
+                    String id = e.getKey();
+                    JsonNode settings = e.getValue();
+                    JsonNode provider = settings.get("provider");
+                    JsonNode connection = settings.get("connection");
+                    try {
+                        ResourceProvider providerInstance = (ResourceProvider) instantiateZeroArgumentConstructorClass(provider.get("class").asText());
+                        providerInstance.init(om.convertValue(provider.get("config"), new TypeReference<>() {
+                        }));
+                        DataConnection connectionInstance = (DataConnection) instantiateZeroArgumentConstructorClass(connection.get("class").asText());
+                        connectionInstance.loadConfig(connection.get("config"));
+                        resourceDataSources.put(id, new ClinicalResourceDataSource(providerInstance, connectionInstance));
+                    } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
+                             InstantiationException | IllegalAccessException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+        );
+        JsonNode outputSettings = config.get("resultsConnection");
+        DataConnection resultsConnection = (DataConnection) instantiateZeroArgumentConstructorClass(outputSettings.get("class").asText());
+        resultsConnection.loadConfig(outputSettings.get("config"));
+
         // Set up middleware connection
         RestTemplate middleware = new RestTemplate();
         middleware.setUriTemplateHandler(new DefaultUriBuilderFactory(jobConfig.getCallback()));
+        middleware.setInterceptors(Collections.singletonList(
+                new BasicAuthenticationInterceptor(
+                        config.get("middleware").get("user").asText(),
+                        config.get("middleware").get("password").asText())));
         UUID jobUID = jobConfig.getJobid();
-        // Load data connections from bundled config
-        JsonNode backendConfig = new ObjectMapper().readTree(CohortIdentificationJob.class.getResourceAsStream("/org/ohnlp/ir/cat/backend/config.json"));
-        JsonNode ehrConfig = backendConfig.get("data").get("ehr");
-        String ehrDataConnectionClazz = ehrConfig.get("connection").get("class").asText();
-        DataConnection ehrConn = (DataConnection) instantiateZeroArgumentConstructorClass(ehrDataConnectionClazz);
-        ehrConn.loadConfig(ehrConfig.get("connection").get("config"));
-        String ehrResourceProviderClazz = ehrConfig.get("resourceProvider").get("class").asText();
-        ClinicalResourceDataSource ehrDataSource = new ClinicalResourceDataSource();
-        ehrDataSource.setDataConnection(ehrConn);
-        ehrDataSource.setResourceProvider((ResourceProvider) instantiateZeroArgumentConstructorClass(ehrResourceProviderClazz)); // TODO init config
-        String outputDataConnectionClazz = backendConfig.get("data").get("output").get("connection").get("class").asText();
-        DataConnection out = (DataConnection) instantiateZeroArgumentConstructorClass(outputDataConnectionClazz);
-        out.loadConfig(backendConfig.get("data").get("output").get("connection").get("config"));
-        // Retrieve Criterion from middleware
-        //TODO this should be using job_uid, not project_uid, but this functionality is not yet implemented in middleware
-        Criterion criterion = middleware.getForObject(
-                "/_projects/criterion?project_uid={project}",
-                Criterion.class,
-                Map.of("project_uid", jobUID.toString().toUpperCase(Locale.ROOT)));
-        Map<ClinicalEntityType, Map<String, EntityCriterion>> leafsByDataType = getLeafsByDataType(criterion);
-        // Now actually run the pipeline
-        Pipeline p = Pipeline.create();
-        Scorer scorer = new BM25Scorer(); // TODO this should be configurable
-        // Iterate through all data types, generating scores for all leaf nodes
-        List<PCollection<KV<KV<String, String>, CandidateScore>>> leafScoreList = new ArrayList<>();
-        for (Map.Entry<ClinicalEntityType, Map<String, EntityCriterion>> e : leafsByDataType.entrySet()) {
-            ClinicalEntityType cdt = e.getKey();
-            Map<String, EntityCriterion> leaves = e.getValue();
-            expandLeafNodes(cdt, leaves, ehrDataSource);
-            // Score based on EHR leaf nodes
-            PCollection<KV<KV<String, String>, CandidateScore>> ehrScores = scorer.score(p, leaves, cdt, ehrDataSource);
-            // TODO combine with nlp results here
-            leafScoreList.add(ehrScores);
-        }
-        // Union all the leaf scores across the disparate clinical data types
-        PCollection<KV<KV<String, String>, CandidateScore>> leafScores = PCollectionList.of(leafScoreList).apply(Flatten.pCollections());
-        // Now combine scores using the base criterion
-        PCollection<KV<String, Double>> scoresByPatientUid = leafScores.apply("Score Aggregation: Remap to (patient_uid, (criterion_uid, scoreWithEvidence))",
-                ParDo.of(new DoFn<KV<KV<String, String>, CandidateScore>, KV<String, KV<String, CandidateScore>>>() {
-                    @ProcessElement
-                    public void process(ProcessContext c) {
-                        c.output(
-                                KV.of(
-                                        c.element().getKey().getValue(),
-                                        KV.of(c.element().getKey().getKey(), c.element().getValue())
-                                )
-                        );
+        try {
+            // Retrieve Criterion from middleware
+            Criterion criterion = middleware.getForObject(
+                    "/_cohorts/criterion?job_uid={job_uid}",
+                    Criterion.class,
+                    Map.of("job_uid", jobUID.toString().toUpperCase(Locale.ROOT)));
+            // Now actually run the pipeline
+            Scorer scorer = new BM25Scorer(); // TODO this should be configurable
+            // Get leafs by data type
+            Map<ClinicalEntityType, Map<String, EntityCriterion>> leafsByDataType = getLeafsByDataType(criterion);
+            System.out.println("Identified Leaf Nodes:");
+            System.out.println(om.writerWithDefaultPrettyPrinter().writeValueAsString(leafsByDataType));
+            System.out.println("==============\r\n");
+
+            // Perform base BM25 Scoring over each data type
+            List<PCollection<KV<KV<String, String>, CandidateScore>>> leafScoreList = new ArrayList<>();
+            for (Map.Entry<ClinicalEntityType, Map<String, EntityCriterion>> e : leafsByDataType.entrySet()) {
+                ClinicalEntityType cdt = e.getKey();
+                Map<String, EntityCriterion> leaves = e.getValue();
+                // Score for each data source
+                resourceDataSources.forEach((id, src) -> {
+                    PCollection<KV<KV<String, String>, CandidateScore>> scores = scorer.score(p, leaves, cdt, src);
+                    leafScoreList.add(scores);
+                });
+                // TODO combine with nlp results here
+            }
+            // Union all the leaf scores across the disparate clinical data types
+            PCollection<KV<KV<String, String>, CandidateScore>> leafScores = PCollectionList.of(leafScoreList).apply(Flatten.pCollections());
+            // Now combine scores using the base criterion
+            PCollection<KV<String, Double>> scoresByPatientUid = leafScores.apply("Score Aggregation: Remap to (patient_uid, (criterion_uid, scoreWithEvidence))",
+                    ParDo.of(new DoFn<KV<KV<String, String>, CandidateScore>, KV<String, KV<String, CandidateScore>>>() {
+                        @ProcessElement
+                        public void process(ProcessContext c) {
+                            c.output(
+                                    KV.of(
+                                            c.element().getKey().getValue(),
+                                            KV.of(c.element().getKey().getKey(), c.element().getValue())
+                                    )
+                            );
+                        }
+                    })
+            ).apply(
+                    "Score Aggregation: Group leaf scores by patient",
+                    GroupByKey.create()
+            ).apply(
+                    "Score Aggregation: Apply logical/non-leaf criterion scores",
+                    ParDo.of(
+                            new DoFn<KV<String, Iterable<KV<String, CandidateScore>>>, KV<String, Double>>() {
+                                @ProcessElement
+                                public void process(ProcessContext c) {
+                                    HashMap<UUID, CandidateScore> leafScores = new HashMap<>();
+                                    StreamSupport.stream(c.element().getValue().spliterator(), false)
+                                            .forEach(e -> leafScores.merge(UUID.fromString(e.getKey()), e.getValue(), (v1, v2) -> {
+                                                CandidateScore score = new CandidateScore();
+                                                score.setScore(v1.getScore() + v2.getScore());
+                                                score.setPatientUID(v1.getPatientUID());
+                                                score.setEvidenceIDs(new HashSet<>(v1.getEvidenceIDs()));
+                                                score.getEvidenceIDs().addAll(v2.getEvidenceIDs());
+                                                score.setDataSourceCount(v1.getDataSourceCount() + v2.getDataSourceCount());
+                                                return score;
+                                            }));
+                                    c.output(
+                                            KV.of(
+                                                    c.element().getKey(), // patient_uid
+                                                    criterion.score(leafScores)
+                                            )
+                                    );
+                                }
+                            }
+                    )
+            );
+            // Write both evidence and scores to DB
+            Schema scoreSchema = Schema.of(
+                    Schema.Field.of("job_uid", Schema.FieldType.STRING),
+                    Schema.Field.of("person_uid", Schema.FieldType.STRING),
+                    Schema.Field.of("score", Schema.FieldType.DOUBLE)
+            );
+            Schema evidenceSchema = Schema.of(
+                    Schema.Field.of("job_uid", Schema.FieldType.STRING),
+                    Schema.Field.of("node_uid", Schema.FieldType.STRING),
+                    Schema.Field.of("person_uid", Schema.FieldType.STRING),
+                    Schema.Field.of("evidence_uid", Schema.FieldType.STRING),
+                    Schema.Field.of("score", Schema.FieldType.DOUBLE)
+            );
+            resultsConnection.write("cohort", scoresByPatientUid.apply(ParDo.of(
+                    new DoFn<KV<String, Double>, Row>() {
+                        @ProcessElement
+                        public void process(ProcessContext c) {
+                            c.output(Row.withSchema(scoreSchema).addValues(jobUID, c.element().getKey(), c.element().getValue()).build());
+                        }
                     }
-                })
-        ).apply(
-                "Score Aggregation: Group leaf scores by patient",
-                GroupByKey.create()
-        ).apply(
-                "Score Aggregation: Apply logical/non-leaf criterion scores",
-                ParDo.of(
-                        new DoFn<KV<String, Iterable<KV<String, CandidateScore>>>, KV<String, Double>>() {
-                            @ProcessElement
-                            public void process(ProcessContext c) {
-                                HashMap<UUID, CandidateScore> leafScores = new HashMap<>();
-                                StreamSupport.stream(c.element().getValue().spliterator(), false)
-                                        .forEach(e -> leafScores.put(UUID.fromString(e.getKey()), e.getValue()));
+            )));
+            resultsConnection.write("evidence", leafScores.apply(ParDo.of(
+                    new DoFn<KV<KV<String, String>, CandidateScore>, Row>() {
+                        @ProcessElement
+                        public void process(ProcessContext c) {
+                            String criterionUID = c.element().getKey().getKey();
+                            String patientUID = c.element().getKey().getValue();
+                            CandidateScore leafScore = c.element().getValue();
+                            for (String id : leafScore.getEvidenceIDs()) {
                                 c.output(
-                                        KV.of(
-                                                c.element().getKey(), // patient_uid
-                                                criterion.score(leafScores)
-                                        )
+                                        Row.withSchema(evidenceSchema)
+//                                            .addValues(jobUID, criterionUID, patientUID, leafScore.getScore(), id)
+                                                .addValues(jobUID, criterionUID, patientUID, id, leafScore.getScore() / leafScore.getDataSourceCount())
+                                                .build()
                                 );
                             }
                         }
-                )
-        );
-        // Write both evidence and scores to DB
-        Schema scoreSchema = Schema.of(
-                Schema.Field.of("job_uid", Schema.FieldType.STRING),
-                Schema.Field.of("person_uid", Schema.FieldType.STRING),
-                Schema.Field.of("score", Schema.FieldType.DOUBLE)
-        );
-        Schema evidenceSchema = Schema.of(
-                Schema.Field.of("job_uid", Schema.FieldType.STRING),
-                Schema.Field.of("criterion_uid", Schema.FieldType.STRING),
-                Schema.Field.of("patient_uid", Schema.FieldType.STRING),
-//                Schema.Field.of("criterion_score", Schema.FieldType.DOUBLE),
-                Schema.Field.of("evidence_id", Schema.FieldType.STRING)
-        );
-        out.write("scores", scoresByPatientUid.apply(ParDo.of(
-                new DoFn<KV<String, Double>, Row>() {
-                    @ProcessElement
-                    public void process(ProcessContext c) {
-                        c.output(Row.withSchema(scoreSchema).addValues(jobUID, c.element().getKey(), c.element().getValue()).build());
                     }
-                }
-        )));
-        out.write("evidence", leafScores.apply(ParDo.of(
-                new DoFn<KV<KV<String, String>, CandidateScore>, Row>() {
-                    @ProcessElement
-                    public void process(ProcessContext c) {
-                        String criterionUID = c.element().getKey().getKey();
-                        String patientUID = c.element().getKey().getValue();
-                        CandidateScore leafScore = c.element().getValue();
-                        for (String id : leafScore.getEvidenceIDs()) {
-                            c.output(
-                                    Row.withSchema(evidenceSchema)
-                                    .addValues(jobUID, patientUID, criterionUID, leafScore.getScore(), id)
-                                    .build()
-                            );
-                        }
-                    }
-                }
-        )));
-        p.run().waitUntilFinish();
+            )));
+            p.run().waitUntilFinish();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
 
@@ -165,11 +203,11 @@ public class CohortIdentificationJob {
 
     public static void getLeafsByDataTypeRecurs(Criterion criterion, Map<ClinicalEntityType, Map<String, EntityCriterion>> leafsByCDT) {
         if (criterion instanceof EntityCriterion) { // Leaf Node
-            ClinicalEntityType type = ((EntityCriterion)criterion).getType();
+            ClinicalEntityType type = ((EntityCriterion) criterion).getType();
             leafsByCDT.computeIfAbsent(type, k -> new HashMap<>())
                     .put(criterion.getNodeUID().toString().toUpperCase(Locale.ROOT), (EntityCriterion) criterion);
         } else if (criterion instanceof LogicalCriterion) {
-            for (Criterion child : ((LogicalCriterion)criterion).getChildren()) {
+            for (Criterion child : ((LogicalCriterion) criterion).getChildren()) {
                 getLeafsByDataTypeRecurs(child, leafsByCDT);
             }
         } else {
@@ -178,7 +216,7 @@ public class CohortIdentificationJob {
     }
 
     public static void expandLeafNodes(ClinicalEntityType cdt,
-                                                       Map<String, EntityCriterion> leaves, ClinicalResourceDataSource dataSource) {
+                                       Map<String, EntityCriterion> leaves, ClinicalResourceDataSource dataSource) {
         // TODO currently we do nothing because entityValues are provided for us
 //        leaves.forEach((node_id, criterion) -> {
 //            List<EntityValue> converted = new ArrayList<>();
