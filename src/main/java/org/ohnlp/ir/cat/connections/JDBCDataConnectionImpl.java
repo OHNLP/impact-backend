@@ -25,7 +25,7 @@ public class JDBCDataConnectionImpl implements DataConnection {
         this.config = JdbcIO.DataSourceConfiguration.create(driverClass, jdbcURL);
         if (node.has("user")) {
             String user = node.get("user").asText();
-            String pass = node.get("pass").asText();
+            String pass = node.get("password").asText();
             config = config.withUsername(user).withPassword(pass);
         }
     }
