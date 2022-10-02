@@ -39,7 +39,6 @@ public class JDBCDataConnectionImpl implements DataConnection {
 
     @Override
     public PCollection<Row> getForQueryAndSchema(Pipeline pipeline, String query, Schema schema, String idCol) {
-        System.out.println("Executing " + query);
         JdbcIO.ReadWithPartitions<Row, Long> partitionRead = JdbcIO.<Row>readWithPartitions()
                 .withTable("(" + query + ") as subq")
                 .withDataSourceConfiguration(config)

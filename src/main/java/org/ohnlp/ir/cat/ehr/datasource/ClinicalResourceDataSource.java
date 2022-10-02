@@ -11,7 +11,9 @@ import org.ohnlp.cat.api.criteria.ClinicalEntityType;
 import org.ohnlp.cat.api.ehr.ResourceProvider;
 import org.ohnlp.ir.cat.connections.DataConnection;
 
-public class ClinicalResourceDataSource {
+import java.io.Serializable;
+
+public class ClinicalResourceDataSource implements Serializable {
     private ResourceProvider resourceProvider;
     private DataConnection dataConnection;
 

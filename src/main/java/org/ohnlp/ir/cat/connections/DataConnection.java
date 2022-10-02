@@ -6,9 +6,10 @@ import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.Row;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public interface DataConnection {
+public interface DataConnection extends Serializable {
     /**
      * Loads data connection settings from configuration
      * @param node The configuration node
