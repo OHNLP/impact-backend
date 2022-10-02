@@ -2,14 +2,21 @@ package org.ohnlp.ir.cat.connections;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.beam.sdk.Pipeline;
+import org.apache.beam.sdk.coders.RowCoder;
 import org.apache.beam.sdk.io.jdbc.JdbcIO;
 import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.Row;
 import org.joda.time.ReadableDateTime;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class JDBCDataConnectionImpl implements DataConnection {
@@ -32,14 +39,25 @@ public class JDBCDataConnectionImpl implements DataConnection {
 
     @Override
     public PCollection<Row> getForQueryAndSchema(Pipeline pipeline, String query, Schema schema, String idCol) {
+        System.out.println("Executing " + query);
         JdbcIO.ReadWithPartitions<Row, Long> partitionRead = JdbcIO.<Row>readWithPartitions()
-                .withTable(query)
+                .withTable("(" + query + ") as subq")
                 .withDataSourceConfiguration(config)
-                .withRowOutput();
+                .withRowMapper(rs -> {
+                    List<Object> vals = new ArrayList<>();
+                    schema.getFieldNames().forEach(f -> {
+                        try {
+                            vals.add(rs.getObject(f));
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    return Row.withSchema(schema).addValues(vals.toArray()).build();
+                }).withCoder(RowCoder.of(schema));
         if (idCol != null) {
             partitionRead = partitionRead.withPartitionColumn(idCol).withNumPartitions(this.numPartitions);
         }
-        return pipeline.apply("Extract from JDBC", partitionRead);
+        return pipeline.apply("Extract from JDBC", partitionRead).setRowSchema(schema);
     }
 
     @Override
@@ -49,7 +67,7 @@ public class JDBCDataConnectionImpl implements DataConnection {
         String insertPs = "INSERT INTO " + table + "(" + String.join(",", fields) + ") VALUES ("
         + String.join(",", Arrays.stream(fields).map(s -> "?").collect(Collectors.toSet())) + ")";
         // And now dynamically write rows using setObject type inferences
-        data.apply("Write to JDBC", JdbcIO.<Row>write().withStatement(insertPs).withPreparedStatementSetter((r, preparedStatement) -> {
+        data.apply("Write to JDBC", JdbcIO.<Row>write().withDataSourceConfiguration(config).withStatement(insertPs).withPreparedStatementSetter((r, preparedStatement) -> {
             for (int i = 0; i < fields.length; i++) {
                 Object value = r.getValue(fields[i]);
                 if (value instanceof ReadableDateTime) {

@@ -1,6 +1,10 @@
 package org.ohnlp.ir.cat.scoring;
 
 import org.apache.beam.sdk.Pipeline;
+import org.apache.beam.sdk.coders.KvCoder;
+import org.apache.beam.sdk.coders.RowCoder;
+import org.apache.beam.sdk.coders.SerializableCoder;
+import org.apache.beam.sdk.coders.StringUtf8Coder;
 import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.schemas.transforms.Join;
 import org.apache.beam.sdk.transforms.*;
@@ -271,10 +275,15 @@ public class BM25Scorer extends Scorer {
                 )
         ).apply(
                 "BM25 Step 3.2 (IDF): Get distinct (criterionUID, patientUID) pairs",
-                Distinct.withRepresentativeValueFn((kv) -> kv.getKey() + "|" + kv.getValue())
+                Distinct.withRepresentativeValueFn((KV<String, String> kv) -> kv.getKey() + "|" + kv.getValue())
+                        .withRepresentativeType(TypeDescriptor.of(String.class))
+        ).setCoder(
+                KvCoder.of(StringUtf8Coder.of(), SerializableCoder.of(String.class))
         ).apply(
                 "BM25 Step 3.3 (IDF):Get number of patients per criterion",
                 Count.perKey()
+        ).setCoder(
+                KvCoder.of(StringUtf8Coder.of(), SerializableCoder.of(Long.class))
         ).apply("BM25 Step 3.4 (IDF): Calculate values",
                 ParDo.of(
                         new DoFn<KV<String, Long>, KV<String, Double>>() {
@@ -290,7 +299,7 @@ public class BM25Scorer extends Scorer {
             public void process(@Element KV<String, Double> in, OutputReceiver<Row> out) {
                 out.output(Row.withSchema(idfSchema).addValues(in.getKey(), in.getValue()).build());
             }
-        }));
+        })).setCoder(RowCoder.of(idfSchema)).setRowSchema(idfSchema);
     }
 
     private PCollection<Row> getTF(Schema tfSchema, PCollection<KV<String, KV<String, DomainResource>>> queryMatches) {
@@ -335,31 +344,33 @@ public class BM25Scorer extends Scorer {
             public void process(@Element KV<String, KV<String, Long>> in, OutputReceiver<Row> out) {
                 out.output(Row.withSchema(tfSchema).addValues(in.getKey(), in.getValue().getKey(), in.getValue().getValue()).build());
             }
-        }));
+        })).setCoder(RowCoder.of(tfSchema)).setRowSchema(tfSchema);
     }
 
     private PCollection<KV<KV<String, String>, CandidateScore>> getScores(PCollection<KV<String, Long>> doclen, PCollection<Row> idf, PCollection<Row> tf, PCollectionView<Double> avgDocLen) {
+        Schema docLenSchema = Schema.of(
+                Schema.Field.of("patient_uid", Schema.FieldType.STRING),
+                Schema.Field.of("doc_len", Schema.FieldType.INT64)
+        );
+        PCollection<Row> doclenColl = doclen.apply(
+                ParDo.of(new DoFn<KV<String, Long>, Row>() {
+                    @ProcessElement
+                    public void process(@Element KV<String, Long> in, OutputReceiver<Row> out) {
+                        out.output(Row.withSchema(docLenSchema).addValues(in.getKey(), in.getValue()).build());
+                    }
+                })).setCoder(RowCoder.of(docLenSchema)).setRowSchema(docLenSchema);
         return tf.apply(
                 "BM25 Step 5.1: Join TF, IDF, and docLen for calculation",
                 // Use broadcast joins for efficiency since lhs is always smaller than rhs
                 new PTransform<PCollection<Row>, PCollection<Row>>() {
                     @Override
                     public PCollection<Row> expand(PCollection<Row> inputTF) {
-                        return Join.innerBroadcastJoin(doclen.apply(
-                                ParDo.of(new DoFn<KV<String, Long>, Row>() {
-                                    @ProcessElement
-                                    public void process(@Element KV<String, Long> in, OutputReceiver<Row> out) {
-                                        out.output(Row.withSchema(
-                                                Schema.of(
-                                                        Schema.Field.of("patient_uid", Schema.FieldType.STRING),
-                                                        Schema.Field.of("doc_len", Schema.FieldType.INT64)
-                                                )
-                                        ).addValues(in.getKey(), in.getValue()).build());
-                                    }
-                                })
-                        )).on(Join.FieldsEqual.left("rhs.patient_uid").right("patient_uid")).expand(
-                                Join.innerBroadcastJoin(idf).using("criterion_uid").expand(inputTF)
-                        );
+                        // Do TFIDF first because TF filter lowers collection size
+                        PCollection<Row> tfIDFJoined = Join.innerBroadcastJoin(idf).using("criterion_uid").expand(inputTF);
+                        // Now join with doclencoll using tfidf as a lhs
+                        return Join.innerBroadcastJoin(doclenColl)
+                                .on(Join.FieldsEqual.left("lhs.patient_uid").right("patient_uid"))
+                                .expand(tfIDFJoined);
                     }
                 }
         ).apply(

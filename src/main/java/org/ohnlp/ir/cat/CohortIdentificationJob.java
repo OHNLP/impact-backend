@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.beam.sdk.Pipeline;
+import org.apache.beam.sdk.coders.RowCoder;
 import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.transforms.DoFn;
@@ -75,9 +76,9 @@ public class CohortIdentificationJob {
         try {
             // Retrieve Criterion from middleware
             Criterion criterion = middleware.getForObject(
-                    "/_cohorts/criterion?job_uid={job_uid}",
+                    "/_cohorts/criterion?job_uid={id}",
                     Criterion.class,
-                    Map.of("job_uid", jobUID.toString().toUpperCase(Locale.ROOT)));
+                    Map.of("id", jobUID.toString().toUpperCase(Locale.ROOT)));
             // Now actually run the pipeline
             Scorer scorer = new BM25Scorer(); // TODO this should be configurable
             // Get leafs by data type
@@ -163,7 +164,7 @@ public class CohortIdentificationJob {
                             c.output(Row.withSchema(scoreSchema).addValues(jobUID, c.element().getKey(), c.element().getValue()).build());
                         }
                     }
-            )));
+            )).setCoder(RowCoder.of(scoreSchema)).setRowSchema(scoreSchema));
             resultsConnection.write("evidence", leafScores.apply(ParDo.of(
                     new DoFn<KV<KV<String, String>, CandidateScore>, Row>() {
                         @ProcessElement
@@ -174,18 +175,18 @@ public class CohortIdentificationJob {
                             for (String id : leafScore.getEvidenceIDs()) {
                                 c.output(
                                         Row.withSchema(evidenceSchema)
-//                                            .addValues(jobUID, criterionUID, patientUID, leafScore.getScore(), id)
                                                 .addValues(jobUID, criterionUID, patientUID, id, leafScore.getScore() / leafScore.getDataSourceCount())
                                                 .build()
                                 );
                             }
                         }
                     }
-            )));
-            p.run().waitUntilFinish();
+            )).setCoder(RowCoder.of(evidenceSchema)).setRowSchema(evidenceSchema));
         } catch (Throwable t) {
             t.printStackTrace();
+            throw new RuntimeException(t);
         }
+        p.run().waitUntilFinish();
     }
 
 
