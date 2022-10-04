@@ -52,7 +52,7 @@ public class CohortIdentificationJob {
                     JsonNode connection = settings.get("connection");
                     try {
                         ResourceProvider providerInstance = (ResourceProvider) instantiateZeroArgumentConstructorClass(provider.get("class").asText());
-                        providerInstance.init(om.convertValue(provider.get("config"), new TypeReference<>() {
+                        providerInstance.init(om.convertValue(provider.get("config"), new TypeReference<Map<String, Object>>() {
                         }));
                         DataConnection connectionInstance = (DataConnection) instantiateZeroArgumentConstructorClass(connection.get("class").asText());
                         connectionInstance.loadConfig(connection.get("config"));
@@ -163,7 +163,7 @@ public class CohortIdentificationJob {
                     new DoFn<KV<String, Double>, Row>() {
                         @ProcessElement
                         public void process(ProcessContext c) {
-                            c.output(Row.withSchema(scoreSchema).addValues(jobUID, c.element().getKey(), c.element().getValue()).build());
+                            c.output(Row.withSchema(scoreSchema).addValues(jobUID.toString().toUpperCase(Locale.ROOT), c.element().getKey(), c.element().getValue()).build());
                         }
                     }
             )).setCoder(RowCoder.of(scoreSchema)).setRowSchema(scoreSchema));
@@ -171,13 +171,13 @@ public class CohortIdentificationJob {
                     new DoFn<KV<KV<String, String>, CandidateScore>, Row>() {
                         @ProcessElement
                         public void process(ProcessContext c) {
-                            String criterionUID = c.element().getKey().getKey();
+                            String criterionUID = c.element().getKey().getKey().toUpperCase(Locale.ROOT);
                             String patientUID = c.element().getKey().getValue();
                             CandidateScore leafScore = c.element().getValue();
                             for (String id : leafScore.getEvidenceIDs()) {
                                 c.output(
                                         Row.withSchema(evidenceSchema)
-                                                .addValues(jobUID, criterionUID, patientUID, id, leafScore.getScore() / leafScore.getDataSourceCount())
+                                                .addValues(jobUID.toString(), criterionUID, patientUID, id, leafScore.getScore() / leafScore.getDataSourceCount())
                                                 .build()
                                 );
                             }
