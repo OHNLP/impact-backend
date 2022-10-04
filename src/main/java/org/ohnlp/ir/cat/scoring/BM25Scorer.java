@@ -92,7 +92,7 @@ public class BM25Scorer extends Scorer {
         // Calculate Inverse Document Frequency
         Schema idfSchema = Schema.of(
                 Schema.Field.of("criterion_uid", Schema.FieldType.STRING),
-                Schema.Field.of("idf", Schema.FieldType.INT64)
+                Schema.Field.of("idf", Schema.FieldType.DOUBLE)
         );
 
         PCollection<Row> idf = getIdf(idfSchema, queryMatches, collSizeView);
@@ -383,7 +383,7 @@ public class BM25Scorer extends Scorer {
                             @ProcessElement
                             public void process(ProcessContext c, @Element Row in, OutputReceiver<KV<KV<String, String>, CandidateScore>> out) {
                                 double bm25 = bm25(
-                                        in.getRow("lhs").getRow("rhs").getInt64("idf").doubleValue(),
+                                        in.getRow("lhs").getRow("rhs").getDouble("idf"),
                                         in.getRow("lhs").getRow("lhs").getInt64("tf").doubleValue(),
                                         in.getRow("rhs").getInt64("doc_len").doubleValue(),
                                         c.sideInput(avgDocLen)
