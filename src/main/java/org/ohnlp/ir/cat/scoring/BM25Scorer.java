@@ -54,7 +54,8 @@ public class BM25Scorer extends Scorer {
             ClinicalEntityType queryType,
             ClinicalResourceDataSource dataSource) {
 
-        PCollection<? extends DomainResource> items = getRawData(p, dataSource, queryType);
+        PCollection<? extends DomainResource> items = getRawData(p, dataSource, queryType)
+                .apply("Break Fusion", Reshuffle.viaRandomKey());
 
         SerializableFunction<DomainResource, String> patUIDExtractorFn = getPatIDExtractorFn(queryType);
 
