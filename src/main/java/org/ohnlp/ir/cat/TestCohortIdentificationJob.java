@@ -15,22 +15,15 @@ import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.PCollectionList;
 import org.apache.beam.sdk.values.Row;
-import org.codehaus.jackson.node.ObjectNode;
 import org.ohnlp.cat.api.cohorts.CandidateScore;
 import org.ohnlp.cat.api.criteria.ClinicalEntityType;
 import org.ohnlp.cat.api.criteria.Criterion;
 import org.ohnlp.cat.api.criteria.EntityCriterion;
 import org.ohnlp.cat.api.ehr.ResourceProvider;
-import org.ohnlp.cat.common.impl.ehr.OHDSICDMNLPResourceProvider;
-import org.ohnlp.cat.common.impl.ehr.OHDSICDMResourceProvider;
 import org.ohnlp.ir.cat.connections.DataConnection;
-import org.ohnlp.ir.cat.connections.JDBCDataConnectionImpl;
 import org.ohnlp.ir.cat.ehr.datasource.ClinicalResourceDataSource;
 import org.ohnlp.ir.cat.scoring.BM25Scorer;
 import org.ohnlp.ir.cat.scoring.Scorer;
-import org.springframework.http.client.support.BasicAuthenticationInterceptor;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -162,7 +155,7 @@ public class TestCohortIdentificationJob {
                     Schema.Field.of("evidence_uid", Schema.FieldType.STRING),
                     Schema.Field.of("score", Schema.FieldType.DOUBLE)
             );
-            resultsConnection.write("cohort", scoresByPatientUid.apply(ParDo.of(
+            resultsConnection.write("cat.cohort", scoresByPatientUid.apply(ParDo.of(
                     new DoFn<KV<String, Double>, Row>() {
                         @ProcessElement
                         public void process(ProcessContext c) {
@@ -170,7 +163,7 @@ public class TestCohortIdentificationJob {
                         }
                     }
             )).setCoder(RowCoder.of(scoreSchema)).setRowSchema(scoreSchema));
-            resultsConnection.write("evidence", leafScores.apply(ParDo.of(
+            resultsConnection.write("cat.evidence", leafScores.apply(ParDo.of(
                     new DoFn<KV<KV<String, String>, CandidateScore>, Row>() {
                         @ProcessElement
                         public void process(ProcessContext c) {

@@ -7,6 +7,7 @@ import org.apache.beam.sdk.io.jdbc.JdbcIO;
 import org.apache.beam.sdk.schemas.Schema;
 import org.apache.beam.sdk.values.PCollection;
 import org.apache.beam.sdk.values.Row;
+import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 
 import java.sql.Connection;
@@ -46,7 +47,51 @@ public class JDBCDataConnectionImpl implements DataConnection {
                     List<Object> vals = new ArrayList<>();
                     schema.getFieldNames().forEach(f -> {
                         try {
-                            vals.add(rs.getObject(f));
+                            Object val = null;
+                            Schema.FieldType type = schema.getField(f).getType();
+                            switch (type.getTypeName()) {
+                                case BYTE:
+                                    val = rs.getByte(f);
+                                    break;
+                                case INT16:
+                                    val = rs.getShort(f);
+                                    break;
+                                case INT32:
+                                    val = rs.getInt(f);
+                                    break;
+                                case INT64:
+                                    val = rs.getLong(f);
+                                    break;
+                                case DECIMAL:
+                                    val = rs.getFloat(f); // TODO (?)
+                                    break;
+                                case FLOAT:
+                                    val = rs.getFloat(f);
+                                    break;
+                                case DOUBLE:
+                                    val = rs.getDouble(f);
+                                    break;
+                                case STRING:
+                                    val = rs.getString(f);
+                                    break;
+                                case DATETIME:
+                                    val = DateTime.parse(rs.getString(f));
+//                                    val = new DateTime(rs.getDate(f).getTime());
+                                    break;
+                                case BOOLEAN:
+                                    val = rs.getBoolean(f);
+                                    break;
+                                case BYTES:
+                                    val = rs.getBytes(f);
+                                    break;
+                                case ARRAY:
+                                case ITERABLE:
+                                case MAP:
+                                case ROW:
+                                case LOGICAL_TYPE:
+                                    throw new UnsupportedOperationException("Unsupported sql query return type " + type.getTypeName());
+                            }
+                            vals.add(val);
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
@@ -56,7 +101,7 @@ public class JDBCDataConnectionImpl implements DataConnection {
         if (idCol != null) {
             partitionRead = partitionRead.withPartitionColumn(idCol).withNumPartitions(this.numPartitions);
         }
-        return pipeline.apply("Extract from JDBC", partitionRead).setRowSchema(schema);
+        return pipeline.apply("Extract from JDBC " + query, partitionRead).setRowSchema(schema);
     }
 
     @Override
