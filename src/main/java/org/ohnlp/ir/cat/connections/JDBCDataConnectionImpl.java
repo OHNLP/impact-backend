@@ -109,7 +109,7 @@ public class JDBCDataConnectionImpl implements DataConnection {
         // Dynamically create insert statement
         String[] fields = data.getSchema().getFieldNames().toArray(new String[0]);
         String insertPs = "INSERT INTO " + table + "(" + String.join(",", fields) + ") VALUES ("
-        + String.join(",", Arrays.stream(fields).map(s -> "?").collect(Collectors.toSet())) + ")";
+        + Arrays.stream(fields).map(s -> "?").collect(Collectors.joining(",")) + ")";
         // And now dynamically write rows using setObject type inferences
         data.apply("Write to JDBC", JdbcIO.<Row>write().withDataSourceConfiguration(config).withStatement(insertPs).withPreparedStatementSetter((r, preparedStatement) -> {
             for (int i = 0; i < fields.length; i++) {
