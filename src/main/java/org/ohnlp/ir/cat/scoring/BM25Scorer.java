@@ -35,32 +35,16 @@ public class BM25Scorer extends Scorer {
     private double k1 = 1.2;
     private double b = 0.75;
 
-    // Patient ID Extraction Functions
-    private static final SerializableFunction<DomainResource, String> PERSON_PATUID_EXTRACTION = (r) -> {
-        String base = r.getId();
-        // remove source identifier
-        base = base.substring(base.indexOf(":") + 1);
-        // remove type identifier
-        base = base.substring(base.indexOf(":") + 1);
-        return base;
-    };
-    private static final SerializableFunction<DomainResource, String> CONDITION_PATUID_EXTRACTION = (r) -> ((Condition) r).getSubject().getIdentifier().getValue();
-    private static final SerializableFunction<DomainResource, String> PROCEDURE_PATUID_EXTRACTION = (r) -> ((Procedure) r).getSubject().getIdentifier().getValue();
-    private static final SerializableFunction<DomainResource, String> MEDICATION_PATUID_EXTRACTION = (r) -> ((MedicationStatement) r).getSubject().getIdentifier().getValue();
-    private static final SerializableFunction<DomainResource, String> OBSERVATION_PATUID_EXTRACTION = (r) -> ((Observation) r).getSubject().getIdentifier().getValue();
-
-
     public PCollection<KV<KV<String, String>, CandidateScore>> score(Pipeline p, Map<String, EntityCriterion> query, ClinicalEntityType queryType, ClinicalResourceDataSource dataSource) {
 
         PCollection<? extends DomainResource> items = getRawData(p, dataSource, queryType).apply("Break Fusion", Reshuffle.viaRandomKey());
 
-        SerializableFunction<DomainResource, String> patUIDExtractorFn = getPatIDExtractorFn(queryType);
 
         // Extract patient UIDs from DomainResource objects
         PCollection<KV<String, DomainResource>> allRecordsByPatientUID = items.apply("Data Preprocessing: Split into (PatientUID, DomainResource) pairs", ParDo.of(new DoFn<DomainResource, KV<String, DomainResource>>() {
             @ProcessElement
             public void process(@Element DomainResource record, OutputReceiver<KV<String, DomainResource>> out) {
-                out.output(KV.of(patUIDExtractorFn.apply(record), record));
+                out.output(KV.of(dataSource.extractPatUIDForResource(queryType, record), record));
             }
         }));
 
@@ -102,23 +86,6 @@ public class BM25Scorer extends Scorer {
 
     private PCollection<? extends DomainResource> getRawData(Pipeline p, ClinicalResourceDataSource dataSource, ClinicalEntityType queryType) {
         return dataSource.getResources(p, queryType);
-    }
-
-    private SerializableFunction<DomainResource, String> getPatIDExtractorFn(ClinicalEntityType queryType) {
-        switch (queryType) {
-            case PERSON:
-                return PERSON_PATUID_EXTRACTION;
-            case CONDITION:
-                return CONDITION_PATUID_EXTRACTION;
-            case PROCEDURE:
-                return PROCEDURE_PATUID_EXTRACTION;
-            case MEDICATION:
-                return MEDICATION_PATUID_EXTRACTION;
-            case OBSERVATION:
-                return OBSERVATION_PATUID_EXTRACTION;
-            default:
-                throw new UnsupportedOperationException("Unknown query type " + queryType);
-        }
     }
 
     private PCollection<KV<String, KV<String, DomainResource>>> filterMatching(PCollection<KV<String, DomainResource>> allRecordsByPatientUID, Map<String, EntityCriterion> query) {

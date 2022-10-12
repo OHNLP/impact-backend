@@ -55,4 +55,8 @@ public class ClinicalResourceDataSource implements Serializable {
     public void setDataConnection(DataConnection dataConnection) {
         this.dataConnection = dataConnection;
     }
+
+    public String extractPatUIDForResource(ClinicalEntityType type, DomainResource resource) {
+        return this.resourceProvider.extractPatUIDForResource(type, resource);
+    }
 }
