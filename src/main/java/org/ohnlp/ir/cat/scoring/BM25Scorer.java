@@ -39,9 +39,9 @@ public class BM25Scorer extends Scorer {
     private static final SerializableFunction<DomainResource, String> PERSON_PATUID_EXTRACTION = (r) -> {
         String base = r.getId();
         // remove source identifier
-        base = base.substring(base.indexOf(":"));
+        base = base.substring(base.indexOf(":") + 1);
         // remove type identifier
-        base = base.substring(base.indexOf(":"));
+        base = base.substring(base.indexOf(":") + 1);
         return base;
     };
     private static final SerializableFunction<DomainResource, String> CONDITION_PATUID_EXTRACTION = (r) -> ((Condition) r).getSubject().getIdentifier().getValue();
