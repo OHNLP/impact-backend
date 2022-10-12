@@ -77,10 +77,13 @@ public class CohortIdentificationJob {
         UUID jobUID = jobConfig.getJobid();
         try {
             // Retrieve Criterion from middleware
+            HashMap<String, String> params = new HashMap<>();
+            params.put("id", jobUID.toString().toUpperCase(Locale.ROOT));
             Criterion criterion = middleware.getForObject(
                     "/_cohorts/criterion?job_uid={id}",
                     Criterion.class,
-                    Map.of("id", jobUID.toString().toUpperCase(Locale.ROOT)));
+                    params
+                    );
             // Now actually run the pipeline
             Scorer scorer = new BM25Scorer(); // TODO this should be configurable
             // Get leafs by data type
