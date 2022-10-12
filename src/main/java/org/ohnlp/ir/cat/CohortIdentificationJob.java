@@ -52,7 +52,7 @@ public class CohortIdentificationJob {
                     JsonNode connection = settings.get("connection");
                     try {
                         ResourceProvider providerInstance = (ResourceProvider) instantiateZeroArgumentConstructorClass(provider.get("class").asText());
-                        providerInstance.init(om.convertValue(provider.get("config"), new TypeReference<Map<String, Object>>() {
+                        providerInstance.init(id, om.convertValue(provider.get("config"), new TypeReference<Map<String, Object>>() {
                         }));
                         DataConnection connectionInstance = (DataConnection) instantiateZeroArgumentConstructorClass(connection.get("class").asText());
                         connectionInstance.loadConfig(connection.get("config"));
