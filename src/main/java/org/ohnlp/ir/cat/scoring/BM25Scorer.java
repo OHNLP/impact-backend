@@ -17,6 +17,7 @@ import org.hl7.fhir.r4.model.*;
 import org.ohnlp.cat.api.cohorts.CandidateScore;
 import org.ohnlp.cat.api.criteria.ClinicalEntityType;
 import org.ohnlp.cat.api.criteria.EntityCriterion;
+import org.ohnlp.cat.api.ehr.ResourceProvider;
 import org.ohnlp.ir.cat.ehr.datasource.ClinicalResourceDataSource;
 
 import java.util.HashSet;
@@ -49,7 +50,7 @@ public class BM25Scorer extends Scorer {
         }));
 
         // Apply cohort definition criteria matching, produces <criteriaUID, <patientUID, matchingResource>>
-        PCollection<KV<String, KV<String, DomainResource>>> queryMatches = filterMatching(allRecordsByPatientUID, query);
+        PCollection<KV<String, KV<String, DomainResource>>> queryMatches = filterMatching(allRecordsByPatientUID, query, dataSource.getResourceProvider());
 
         // Collection of evidence IDs for lookup to pass on to the frontend/user for scoring purposes
         PCollection<KV<KV<String, String>, Set<String>>> evidence = generateEvidenceSets(queryMatches);
@@ -88,14 +89,14 @@ public class BM25Scorer extends Scorer {
         return dataSource.getResources(p, queryType);
     }
 
-    private PCollection<KV<String, KV<String, DomainResource>>> filterMatching(PCollection<KV<String, DomainResource>> allRecordsByPatientUID, Map<String, EntityCriterion> query) {
+    private PCollection<KV<String, KV<String, DomainResource>>> filterMatching(PCollection<KV<String, DomainResource>> allRecordsByPatientUID, Map<String, EntityCriterion> query, ResourceProvider provider) {
         return allRecordsByPatientUID.apply("Query: Filter table to Criteria matching items", ParDo.of(new DoFn<KV<String, DomainResource>, KV<String, KV<String, DomainResource>>>() {
             @ProcessElement
             public void process(@Element KV<String, DomainResource> in, OutputReceiver<KV<String, KV<String, DomainResource>>> out) {
                 String patientUID = in.getKey();
                 DomainResource res = in.getValue();
                 query.forEach((criterion_uid, criterion) -> {
-                    if (criterion.matches(res)) {
+                    if (criterion.matches(res, provider)) {
                         out.output(KV.of(criterion_uid, KV.of(patientUID, res)));
                     }
                 });
