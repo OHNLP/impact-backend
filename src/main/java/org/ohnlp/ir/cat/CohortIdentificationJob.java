@@ -20,6 +20,7 @@ import org.ohnlp.cat.api.criteria.ClinicalEntityType;
 import org.ohnlp.cat.api.criteria.Criterion;
 import org.ohnlp.cat.api.criteria.EntityCriterion;
 import org.ohnlp.cat.api.criteria.LogicalCriterion;
+import org.ohnlp.cat.api.ehr.DataSourceInformation;
 import org.ohnlp.cat.api.ehr.ResourceProvider;
 import org.ohnlp.ir.cat.connections.DataConnection;
 import org.ohnlp.ir.cat.ehr.datasource.ClinicalResourceDataSource;
@@ -32,6 +33,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CohortIdentificationJob {
@@ -84,6 +86,10 @@ public class CohortIdentificationJob {
                     Criterion.class,
                     params
                     );
+            DataSourceInformation[] dataSources = middleware.getForObject("/_projects/data_sources?job_uid={id}",
+                    DataSourceInformation[].class);
+            Set<String> dataConnections = Arrays.stream(dataSources).map(DataSourceInformation::getBackendID)
+                    .collect(Collectors.toSet());
             // Now actually run the pipeline
             Scorer scorer = new BM25Scorer(); // TODO this should be configurable
             // Get leafs by data type
@@ -99,8 +105,10 @@ public class CohortIdentificationJob {
                 Map<String, EntityCriterion> leaves = e.getValue();
                 // Score for each data source
                 resourceDataSources.forEach((id, src) -> {
-                    PCollection<KV<KV<String, String>, CandidateScore>> scores = scorer.score(p, leaves, cdt, src);
-                    leafScoreList.add(scores);
+                    if (dataConnections.contains(id)) {
+                        PCollection<KV<KV<String, String>, CandidateScore>> scores = scorer.score(p, leaves, cdt, src);
+                        leafScoreList.add(scores);
+                    }
                 });
                 // TODO combine with nlp results here
             }
