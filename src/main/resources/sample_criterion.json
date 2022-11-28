@@ -50,11 +50,89 @@
                     "Gastroesophageal reflux disease"
                   ],
                   "expandedCodes": [
-                    ["1569558", "35208189", "35208190", "725364", "725363", "44822019", "44820924", "318800"]
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "1569558",
+                      "representationDescription": "Gastroesophageal Reflux Disease",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35208189",
+                      "representationDescription": "Gastroesophageal Reflux Disease",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35208190",
+                      "representationDescription": "Gastroesophageal Reflux Disease",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "725364",
+                      "representationDescription": "Gastroesophageal Reflux Disease",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "725363",
+                      "representationDescription": "Gastroesophageal Reflux Disease",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44822019",
+                      "representationDescription": "Gastroesophageal Reflux Disease",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44820924",
+                      "representationDescription": "Gastroesophageal Reflux Disease",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "318800",
+                      "representationDescription": "Gastroesophageal Reflux Disease",
+                      "resolverID": "OHDSIATHENA"
+                    }
                   ]
                 }
               ]
-
             },
             {
               "nodeUID": "5d65c3fa-a262-4182-b2c3-b28a884dde59",
@@ -78,15 +156,2656 @@
                     "cimetidine"
                   ],
                   "expandedCodes": [
-                    ["40221867", "42543965", "923647", "19102188", "19102190", "19019418", "19102189", "19130286", "19130290", "19101742", "19101743", "19101744", "923648", "923720", "923721", "923691", "19061738", "19023551", "19113655", "923690", "923757", "923756", "923645", "1718972", "1718971", "923752", "923753", "37497620", "19123300", "40221868", "19010207", "1719004", "1719006", "19130288", "19130292", "19010180", "923651", "19003320", "40176131", "19034886", "40221050", "19024786", "923682", "923755", "923754", "19125630", "993623", "19128369", "19128367", "37497626", "42708624"],
-                    ["904453", "904460", "19112920", "19123105", "19123103", "904457", "42800719", "40165707", "904490", "904492", "904456", "19101746", "19101790", "19101745", "42800715", "904458", "40222575", "40220768", "40220766", "40222578", "19123104", "35606348", "40165708", "42800716", "40165709", "40165710", "42800720", "40222576", "40222579"],
-                    ["948078", "948080", "19129540", "948079", "19080217", "948108", "19128318", "19113991", "19016797", "40168991", "19129541", "948107", "19071430", "19113992"],
-                    ["911735", "44784921", "43560634", "40163283", "40163285"],
-                    ["19039926", "35603675", "19133802", "19039961", "35603677", "40174233", "40174235", "44784922", "43560635", "19054406", "40163286", "19054407"],
-                    ["929887", "929924", "19098167", "929955", "19129803", "19112613", "929922", "929927", "929953", "929889", "19113636", "19121169", "19013434", "19122145", "19122146", "19054442", "19031628", "40167553", "929954", "19031629", "19024820", "19113637", "19121170"],
-                    ["961047", "961050", "961082", "961168", "19019696", "961051", "961167", "44818321", "44818368", "44818341", "19122391", "19126405", "1718658", "961162", "19107189", "961083", "961164", "961166", "961264", "19115089", "961086", "19129050", "19079438", "961238", "961163", "19107936", "19107935", "961089", "961087", "961090", "19064522", "19017287", "19054263", "40235792", "19018081", "961236", "961268", "19017288", "19054264", "19018082", "961267", "19012853", "961085", "19124364", "43013806", "19133216", "19003311", "19003290", "961239", "961263", "19035388"],
-                    ["953076", "19077242", "35606551", "35606553", "19077220", "40167604", "19021074", "19130460", "19103341", "19077241", "953113", "19027493", "19019002", "953080", "40167605", "40167603", "40236162", "19003315", "19003316", "19046867", "43011788", "19033687", "953146", "953109", "953147", "953110", "40239181", "40239182", "19033716", "953112", "35603521", "993601", "40166934"],
-                    ["19100653", "19066499", "19075349", "19064431", "19075371", "19075350", "997319", "19075372", "19063669", "19075373", "44818393", "19003273", "19003275", "19003281", "19003289", "19003286", "19036595", "19003276", "19003283", "19003271", "19010058", "19003287", "19003277", "19003285", "19003272", "19010059", "19003288", "19107357", "40173845", "19003220", "19024858", "997300", "19024859", "19128546", "19003274", "19010177", "19010743", "19003280", "19010744", "19003282", "19010745", "19003284", "19030094", "997312", "40173843", "997395", "19000831"]
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40221867",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "42543965",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923647",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19102188",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19102190",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19019418",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19102189",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19130286",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19130290",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19101742",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19101743",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19101744",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923648",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923720",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923721",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923691",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19061738",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19023551",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19113655",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923690",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923757",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923756",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923645",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "1718972",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "1718971",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923752",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923753",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "37497620",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19123300",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40221868",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19010207",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "1719004",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "1719006",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19130288",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19130292",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19010180",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923651",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003320",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40176131",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19034886",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40221050",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19024786",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923682",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923755",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "923754",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19125630",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "993623",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19128369",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19128367",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "37497626",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "42708624",
+                      "representationDescription": "Omeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "904453",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "904460",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19112920",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19123105",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19123103",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "904457",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "42800719",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40165707",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "904490",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "904492",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "904456",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19101746",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19101790",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19101745",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "42800715",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "904458",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40222575",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40220768",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40220766",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40222578",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19123104",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35606348",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40165708",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "42800716",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40165709",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40165710",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "42800720",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40222576",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40222579",
+                      "representationDescription": "Esomeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "948078",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "948080",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19129540",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "948079",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19080217",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "948108",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19128318",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19113991",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19016797",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40168991",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19129541",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "948107",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19071430",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19113992",
+                      "representationDescription": "Pantoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "911735",
+                      "representationDescription": "Rabeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44784921",
+                      "representationDescription": "Rabeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "43560634",
+                      "representationDescription": "Rabeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40163283",
+                      "representationDescription": "Rabeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40163285",
+                      "representationDescription": "Rabeprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19039926",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35603675",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19133802",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19039961",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35603677",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40174233",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40174235",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44784922",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "43560635",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19054406",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40163286",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19054407",
+                      "representationDescription": "Dexlansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "929887",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "929924",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19098167",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "929955",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19129803",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19112613",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "929922",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "929927",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "929953",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "929889",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19113636",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19121169",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19013434",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19122145",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19122146",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19054442",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19031628",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40167553",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "929954",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19031629",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19024820",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19113637",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19121170",
+                      "representationDescription": "Lansoprazole",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961047",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961050",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961082",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961168",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19019696",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961051",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961167",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44818321",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44818368",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44818341",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19122391",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19126405",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "1718658",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961162",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19107189",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961083",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961164",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961166",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961264",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19115089",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961086",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19129050",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19079438",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961238",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961163",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19107936",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19107935",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961089",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961087",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961090",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19064522",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19017287",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19054263",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40235792",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19018081",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961236",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961268",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19017288",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19054264",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19018082",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961267",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19012853",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961085",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19124364",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "43013806",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19133216",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003311",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003290",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961239",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "961263",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19035388",
+                      "representationDescription": "Ranitidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "953076",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19077242",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35606551",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35606553",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19077220",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40167604",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19021074",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19130460",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19103341",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19077241",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "953113",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19027493",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19019002",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "953080",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40167605",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40167603",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40236162",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003315",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003316",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19046867",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "43011788",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19033687",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "953146",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "953109",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "953147",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "953110",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40239181",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40239182",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19033716",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "953112",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35603521",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "993601",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40166934",
+                      "representationDescription": "Famotidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19100653",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19066499",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19075349",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19064431",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19075371",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19075350",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "997319",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19075372",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19063669",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19075373",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44818393",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003273",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003275",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003281",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003289",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003286",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19036595",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003276",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003283",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003271",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19010058",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003287",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003277",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003285",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003272",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19010059",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003288",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19107357",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40173845",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003220",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19024858",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "997300",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19024859",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19128546",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003274",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19010177",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19010743",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003280",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19010744",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003282",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19010745",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19003284",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19030094",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "997312",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "40173843",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "997395",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "19000831",
+                      "representationDescription": "Cimetidine",
+                      "resolverID": "OHDSIATHENA"
+                    }
                   ]
                 }
               ]
@@ -105,7 +2824,36 @@
                     "erosive esophagitis"
                   ],
                   "expandedCodes": [
-                    ["4231067", "44832451", "35208188"]
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "4231067",
+                      "representationDescription": "Erosive Esophagitis",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "44832451",
+                      "representationDescription": "Erosive Esophagitis",
+                      "resolverID": "OHDSIATHENA"
+                    },
+                    {
+                      "dataSourceID": [
+                        "ehr",
+                        "nlp"
+                      ],
+                      "sourceUMLSCUI": "UNKNOWN",
+                      "representation": "35208188",
+                      "representationDescription": "Erosive Esophagitis",
+                      "resolverID": "OHDSIATHENA"
+                    }
                   ]
                 }
               ]
@@ -142,7 +2890,36 @@
                 "BMI"
               ],
               "expandedCodes": [
-                ["40762636", "3038553", "1027485"]
+                {
+                  "dataSourceID": [
+                    "ehr",
+                    "nlp"
+                  ],
+                  "sourceUMLSCUI": "UNKNOWN",
+                  "representation": "40762636",
+                  "representationDescription": "Body Mass Index",
+                  "resolverID": "OHDSIATHENA"
+                },
+                {
+                  "dataSourceID": [
+                    "ehr",
+                    "nlp"
+                  ],
+                  "sourceUMLSCUI": "UNKNOWN",
+                  "representation": "3038553",
+                  "representationDescription": "Body Mass Index",
+                  "resolverID": "OHDSIATHENA"
+                },
+                {
+                  "dataSourceID": [
+                    "ehr",
+                    "nlp"
+                  ],
+                  "sourceUMLSCUI": "UNKNOWN",
+                  "representation": "1027485",
+                  "representationDescription": "Body Mass Index",
+                  "resolverID": "OHDSIATHENA"
+                }
               ]
             },
             {
@@ -177,7 +2954,31 @@
                 "esophageal adenocarcinoma/cancer"
               ],
               "expandedCodes": [
-                ["3656109","44827550", "37615195", "4081043", "766365" ,"44827596", "44825251", "44822865", "1567474", "44834480", "35206457", "35206112", "35206111", "35206113", "35206110", "44836823", "44828728", "44820596", "44821498", "44821723", "44829792", "44829791", "4181343", "4311880", "4178769"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "3656109", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44827550", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "37615195", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4081043", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "766365", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44827596", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44825251", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44822865", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "1567474", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44834480", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35206457", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35206112", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35206111", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35206113", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35206110", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44836823", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44828728", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44820596", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44821498", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44821723", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44829792", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44829791", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4181343", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4311880", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4178769", "representationDescription": "Esophageal Adenocarcinoma", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
@@ -196,7 +2997,10 @@
                 "endoscopic ablation"
               ],
               "expandedCodes": [
-                ["44816414", "44816419", "2108879", "2108903"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44816414", "representationDescription": "Endoscopic Ablation", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44816419", "representationDescription": "Endoscopic Ablation", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108879", "representationDescription": "Endoscopic Ablation", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108903", "representationDescription": "Endoscopic Ablation", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
@@ -215,7 +3019,9 @@
                 "esophageal squamous dysplasia"
               ],
               "expandedCodes": [
-                ["36715846", "36717489", "36715845"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "36715846", "representationDescription": "Esophageal Squamous Dysplasia", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "36717489", "representationDescription": "Esophageal Squamous Dysplasia", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "36715845", "representationDescription": "Esophageal Squamous Dysplasia", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
@@ -234,7 +3040,38 @@
                 "warfarin"
               ],
               "expandedCodes": [
-                ["40163508", "40163510","40163511",  "40163512", "40163513", "40163518", "40163519", "40163520", "40163524", "40163525", "40163526", "40163530", "40163531", "40163534", "40163535", "40163536", "40163540", "40163541", "40163542", "40163546", "40163547", "40163548", "40163549", "40163554", "40163555", "40163556", "40163560", "40163561", "40163562", "40163566", "40163567", "40163568"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163508", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163510", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163511", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163512", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163513", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163518", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163519", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163520", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163524", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163525", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163526", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163530", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163531", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163534", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163535", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163536", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163540", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163541", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163542", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163546", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163547", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163548", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163549", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163554", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163555", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163556", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163560", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163561", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163562", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163566", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163567", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163568", "representationDescription": "Warfarin", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
@@ -253,7 +3090,16 @@
                 "Coumadin"
               ],
               "expandedCodes": [
-                ["40163511", "40163519", "40163525", "40163535", "40163541", "40163547", "40163555", "40163561", "40163567", "40163531"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163511", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163519", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163525", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163535", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163541", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163547", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163555", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163561", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163567", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "40163531", "representationDescription": "Coumadin", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
@@ -272,7 +3118,95 @@
                 "cirrhosis"
               ],
               "expandedCodes": [
-                ["192675", "194692", "196463", "605193", "619607", "619608", "1569671", "1569681", "1569682", "3656096", "4003673", "4044071", "4046016", "4046123", "4048083", "4049282", "4049419", "4050640", "4053079", "4055209", "4055210", "4055211", "4055212", "4058680", "4058681", "4058682", "4058685", "4058695", "4059285", "4059287", "4059289", "4064161", "4068119", "4071022", "4093759", "4098583", "4103092", "4133978", "4135822", "4140536", "4141628", "4143008", "4144116", "4148254", "4153294", "4159158", "4184779", "4197819", "4203601", "4219593", "4232955", "4252074", "4268006", "4292401", "4294539", "4300060", "4304584", "4313567", "4340392", "4340393", "4340946", "4345477", "35208338", "35208349", "35208350", "35208351", "37110890", "37111265", "37111266", "37117933", "37396157", "37396401", "37399445", "42539566", "43531723", "44783142", "44805713", "44819802", "44826726", "44832477", "44832478", "45538545", "45539251", "45581912", "45601187", "45605952", "45765440", "45772057", "46269816"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "192675", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "194692", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "196463", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "605193", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "619607", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "619608", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "1569671", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "1569681", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "1569682", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "3656096", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4003673", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4044071", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4046016", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4046123", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4048083", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4049282", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4049419", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4050640", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4053079", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4055209", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4055210", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4055211", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4055212", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4058680", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4058681", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4058682", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4058685", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4058695", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4059285", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4059287", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4059289", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4064161", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4068119", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4071022", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4093759", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4098583", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4103092", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4133978", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4135822", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4140536", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4141628", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4143008", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4144116", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4148254", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4153294", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4159158", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4184779", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4197819", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4203601", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4219593", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4232955", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4252074", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4268006", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4292401", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4294539", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4300060", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4304584", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4313567", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4340392", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4340393", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4340946", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4345477", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35208338", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35208349", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35208350", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35208351", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "37110890", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "37111265", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "37111266", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "37117933", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "37396157", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "37396401", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "37399445", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "42539566", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "43531723", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44783142", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44805713", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44819802", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44826726", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44832477", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44832478", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45538545", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45539251", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45581912", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45601187", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45605952", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45765440", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45772057", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "46269816", "representationDescription": "Cirrhosis", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
@@ -291,7 +3225,20 @@
                 "esophageal varices"
               ],
               "expandedCodes": [
-                ["22340", "23245", "24966", "28779", "28974", "619607", "619608", "765574", "1569400", "1569401", "1569402", "4109883", "4111998", "4112183"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "22340", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "23245", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "24966", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "28779", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "28974", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "619607", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "619608", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "765574", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "1569400", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "1569401", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "1569402", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4109883", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4111998", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4112183", "representationDescription": "Esophageal Varices", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
@@ -310,7 +3257,22 @@
                 "Barrett’s esophagus"
               ],
               "expandedCodes": [
-                ["26141", "443344", "1569561", "4025500", "35208197", "36684957", "36684958", "36715844", "44834797", "45557647", "45591579", "45601155", "45605925", "46269823", "46269824", "46269825"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "26141", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "443344", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "1569561", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "4025500", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "35208197", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "36684957", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "36684958", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "36715844", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44834797", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45557647", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45591579", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45601155", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "45605925", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "46269823", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "46269824", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "46269825", "representationDescription": "Barrett's Esophagus", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
@@ -329,7 +3291,42 @@
                 "endoscopy"
               ],
               "expandedCodes": [
-                ["2108883", "2108884", "2108885", "2108886", "2108887", "2108888", "2108889", "2108890", "2108891", "2108892", "2108893", "2108894", "2108895", "2108896", "2108897", "2108898", "2108899", "43527935", "44816416", "44816417", "2108900", "2108901", "2108902", "2108903", "2108904", "2108905", "2108906", "2108907", "2108908", "2108909", "2108910", "44816418", "2108911", "2108912", "2108913", "44816419"]
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108883", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108884", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108885", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108886", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108887", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108888", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108889", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108890", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108891", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108892", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108893", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108894", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108895", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108896", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108897", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108898", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108899", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "43527935", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44816416", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44816417", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108900", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108901", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108902", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108903", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108904", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108905", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108906", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108907", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108908", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108909", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108910", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44816418", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108911", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108912", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "2108913", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"},
+                {"dataSourceID": ["ehr", "nlp"], "sourceUMLSCUI": "UNKNOWN", "representation": "44816419", "representationDescription": "Endoscopy", "resolverID": "OHDSIATHENA"}
               ]
             }
           ]
