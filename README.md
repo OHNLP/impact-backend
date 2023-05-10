@@ -1,5 +1,5 @@
 # IMPACT-Backend
-This provides query execution and patient retrieval scoring.
+This component provides query execution and patient retrieval scoring for IMPACT
 
 ## Building
 
